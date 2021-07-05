@@ -5,10 +5,10 @@
 Network Working Group                                       M. Boucadair
 Internet-Draft                                                    Orange
 Intended status: Standards Track                                T. Reddy
-Expires: January 5, 2022                                          McAfee
+Expires: January 6, 2022                                          McAfee
                                                                   W. Pan
                                                      Huawei Technologies
-                                                            July 4, 2021
+                                                            July 5, 2021
 
 
 Multi-homing Deployment Considerations for Distributed-Denial-of-Service
@@ -36,7 +36,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on January 5, 2022.
+   This Internet-Draft will expire on January 6, 2022.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Boucadair, et al.        Expires January 5, 2022                [Page 1]
+Boucadair, et al.        Expires January 6, 2022                [Page 1]
 
 Internet-Draft              DOTS Multihoming                   July 2021
 
@@ -67,7 +67,7 @@ Table of Contents
    2.  Requirements Language . . . . . . . . . . . . . . . . . . . .   4
    3.  Terminology . . . . . . . . . . . . . . . . . . . . . . . . .   4
    4.  Multi-Homing Scenarios  . . . . . . . . . . . . . . . . . . .   5
-     4.1.  Residential Single CPE  . . . . . . . . . . . . . . . . .   5
+     4.1.  Multi-Homed Residential Single CPE  . . . . . . . . . . .   5
      4.2.  Multi-Homed Enterprise: Single CPE, Multiple Upstream
            ISPs  . . . . . . . . . . . . . . . . . . . . . . . . . .   6
      4.3.  Multi-homed Enterprise: Multiple CPEs, Multiple Upstream
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Boucadair, et al.        Expires January 5, 2022                [Page 2]
+Boucadair, et al.        Expires January 6, 2022                [Page 2]
 
 Internet-Draft              DOTS Multihoming                   July 2021
 
@@ -165,7 +165,7 @@ Internet-Draft              DOTS Multihoming                   July 2021
 
 
 
-Boucadair, et al.        Expires January 5, 2022                [Page 3]
+Boucadair, et al.        Expires January 6, 2022                [Page 3]
 
 Internet-Draft              DOTS Multihoming                   July 2021
 
@@ -221,7 +221,7 @@ Internet-Draft              DOTS Multihoming                   July 2021
 
 
 
-Boucadair, et al.        Expires January 5, 2022                [Page 4]
+Boucadair, et al.        Expires January 6, 2022                [Page 4]
 
 Internet-Draft              DOTS Multihoming                   July 2021
 
@@ -237,7 +237,7 @@ Internet-Draft              DOTS Multihoming                   July 2021
    CPEs because PI addresses may be used for enterprises while this is
    not the current practice for residential CPEs.
 
-4.1.  Residential Single CPE
+4.1.  Multi-Homed Residential Single CPE
 
    The scenario shown in Figure 2 is characterized as follows:
 
@@ -277,7 +277,7 @@ Internet-Draft              DOTS Multihoming                   July 2021
 
 
 
-Boucadair, et al.        Expires January 5, 2022                [Page 5]
+Boucadair, et al.        Expires January 6, 2022                [Page 5]
 
 Internet-Draft              DOTS Multihoming                   July 2021
 
@@ -333,7 +333,7 @@ Internet-Draft              DOTS Multihoming                   July 2021
 
 
 
-Boucadair, et al.        Expires January 5, 2022                [Page 6]
+Boucadair, et al.        Expires January 6, 2022                [Page 6]
 
 Internet-Draft              DOTS Multihoming                   July 2021
 
@@ -389,7 +389,7 @@ Internet-Draft              DOTS Multihoming                   July 2021
 
 
 
-Boucadair, et al.        Expires January 5, 2022                [Page 7]
+Boucadair, et al.        Expires January 6, 2022                [Page 7]
 
 Internet-Draft              DOTS Multihoming                   July 2021
 
@@ -445,7 +445,7 @@ Internet-Draft              DOTS Multihoming                   July 2021
 
 
 
-Boucadair, et al.        Expires January 5, 2022                [Page 8]
+Boucadair, et al.        Expires January 6, 2022                [Page 8]
 
 Internet-Draft              DOTS Multihoming                   July 2021
 
@@ -501,7 +501,7 @@ Internet-Draft              DOTS Multihoming                   July 2021
 
 
 
-Boucadair, et al.        Expires January 5, 2022                [Page 9]
+Boucadair, et al.        Expires January 6, 2022                [Page 9]
 
 Internet-Draft              DOTS Multihoming                   July 2021
 
@@ -557,7 +557,7 @@ Internet-Draft              DOTS Multihoming                   July 2021
 
 
 
-Boucadair, et al.        Expires January 5, 2022               [Page 10]
+Boucadair, et al.        Expires January 6, 2022               [Page 10]
 
 Internet-Draft              DOTS Multihoming                   July 2021
 
@@ -613,7 +613,7 @@ Internet-Draft              DOTS Multihoming                   July 2021
 
 
 
-Boucadair, et al.        Expires January 5, 2022               [Page 11]
+Boucadair, et al.        Expires January 6, 2022               [Page 11]
 
 Internet-Draft              DOTS Multihoming                   July 2021
 
@@ -669,7 +669,7 @@ Internet-Draft              DOTS Multihoming                   July 2021
 
 
 
-Boucadair, et al.        Expires January 5, 2022               [Page 12]
+Boucadair, et al.        Expires January 6, 2022               [Page 12]
 
 Internet-Draft              DOTS Multihoming                   July 2021
 
@@ -725,7 +725,7 @@ Internet-Draft              DOTS Multihoming                   July 2021
 
 
 
-Boucadair, et al.        Expires January 5, 2022               [Page 13]
+Boucadair, et al.        Expires January 6, 2022               [Page 13]
 
 Internet-Draft              DOTS Multihoming                   July 2021
 
@@ -781,7 +781,7 @@ Internet-Draft              DOTS Multihoming                   July 2021
 
 
 
-Boucadair, et al.        Expires January 5, 2022               [Page 14]
+Boucadair, et al.        Expires January 6, 2022               [Page 14]
 
 Internet-Draft              DOTS Multihoming                   July 2021
 
@@ -837,7 +837,7 @@ Authors' Addresses
 
 
 
-Boucadair, et al.        Expires January 5, 2022               [Page 15]
+Boucadair, et al.        Expires January 6, 2022               [Page 15]
 
 Internet-Draft              DOTS Multihoming                   July 2021
 
@@ -893,4 +893,4 @@ Internet-Draft              DOTS Multihoming                   July 2021
 
 
 
-Boucadair, et al.        Expires January 5, 2022               [Page 16]
+Boucadair, et al.        Expires January 6, 2022               [Page 16]

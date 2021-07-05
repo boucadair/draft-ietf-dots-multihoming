@@ -229,7 +229,7 @@
       CPEs because PI addresses may be used for enterprises while this is not
       the current practice for residential CPEs.</t>
 
-      <section anchor="sc1" title="Residential Single CPE">
+      <section anchor="sc1" title="Multi-Homed Residential Single CPE">
         <t>The scenario shown in <xref target="rcpe"></xref> is characterized
         as follows: <list style="symbols">
             <t>The home network is connected to the Internet using one single
