@@ -99,33 +99,30 @@
       <t>In many deployments, it may not be possible for a network to
       determine the cause of a distributed Denial-of-Service (DoS) attack
       <xref target="RFC4732"></xref>. Rather, the network may just realize
-      that some resources seem to be under attack. To improve such situation,
-      the IETF is specifying the DDoS Open Threat Signaling (DOTS)
+      that some resources appear to be under attack. To help with such
+      situations, the IETF has specified the DDoS Open Threat Signaling (DOTS)
       architecture <xref target="RFC8811"></xref>, where a DOTS client can
-      inform a DOTS server that the network is under a potential attack and
-      that appropriate mitigation actions are required. Indeed, because the
-      lack of a common method to coordinate a real-time response among
-      involved actors and network domains jeopardizes the efficiency of DDoS
-      attack mitigation actions, the DOTS protocol is meant to carry requests
-      for DDoS attack mitigation, thereby reducing the impact of an attack and
-      leading to more efficient responsive actions. <xref
-      target="I-D.ietf-dots-use-cases"></xref> identifies a set of scenarios
-      for DOTS; most of these scenarios involve a Customer Premises Equipment
-      (CPE).</t>
+      inform an upstream DOTS server that its network is under a potential
+      attack and that appropriate mitigation actions are required. The DOTS
+      protocols can be used to coordinate real-time mitigation efforts which
+      can evolve as the attacks mutate, thereby reducing the impact of an
+      attack and leading to more efficient responsive actions. <xref
+      target="RFC8903"></xref> identifies a set of scenarios for DOTS; most of
+      these scenarios involve a Customer Premises Equipment (CPE).</t>
 
       <t>The high-level base DOTS architecture is illustrated in <xref
       target="arch"></xref> (<xref target="RFC8811"></xref>):</t>
 
       <t><figure align="center" anchor="arch" title="Basic DOTS Architecture">
-          <artwork><![CDATA[       +-----------+            +-------------+
-       | Mitigator | ~~~~~~~~~~ | DOTS Server |
-       +-----------+            +-------------+
-                                       |
-                                       |
-                                       |
-       +---------------+        +-------------+
-       | Attack Target | ~~~~~~ | DOTS Client |
-       +---------------+        +-------------+
+          <artwork align="center"><![CDATA[+-----------+            +-------------+
+| Mitigator | ~~~~~~~~~~ | DOTS Server |
++-----------+            +-------------+
+                                |
+                                |
+                                |
++---------------+        +-------------+
+| Attack Target | ~~~~~~ | DOTS Client |
++---------------+        +-------------+
 ]]></artwork>
         </figure></t>
 
@@ -134,7 +131,7 @@
       associated with one or more IP addresses. These addresses may or may not
       be of the same address family. The DOTS client establishes one or more
       DOTS sessions by connecting to the provided DOTS server(s) addresses
-      (e.g., <xref target="RFC8973"></xref>).</t>
+      (e.g., by using <xref target="RFC8973"></xref>).</t>
 
       <t>DOTS may be deployed within networks that are connected to one single
       upstream provider. It can also be enabled within networks that are
@@ -145,8 +142,8 @@
           <t>Complete the base DOTS architecture with multi-homing specifics.
           Those specifics need to be taken into account because: <list
               style="symbols">
-              <t>Send a DOTS mitigation request to an arbitrary DOTS server
-              won't help mitigating a DDoS attack.</t>
+              <t>Sending a DOTS mitigation request to an arbitrary DOTS server
+              Will not necessarily help in mitigating a DDoS attack. </t>
 
               <t>Blindly forking all DOTS mitigation requests among all
               available DOTS servers is suboptimal.</t>
@@ -159,17 +156,17 @@
           DOTS services can be offered by all or a subset of upstream
           providers.</t>
 
-          <t>Sketch guidelines and recommendations for placing DOTS requests
+          <t>Provide guidelines and recommendations for placing DOTS requests
           in multi-homed networks, e.g.,: <list style="symbols">
               <t>Select the appropriate DOTS server(s).</t>
 
-              <t>Identify cases where anycast is not recommended.</t>
+              <t>Identify cases where anycast is not recommended for DOTS.</t>
             </list></t>
         </list></t>
 
       <t>This document adopts the following methodology: <list style="symbols">
           <t>Identify and extract viable deployment candidates from <xref
-          target="I-D.ietf-dots-use-cases"></xref>.</t>
+          target="RFC8903"></xref>.</t>
 
           <t>Augment the description with multi-homing technicalities, e.g.,
           <list style="symbols">
@@ -186,7 +183,7 @@
         </list></t>
 
       <t>Multi-homed DOTS agents are assumed to make use of the protocols
-      defined in <xref target="RFC8782"></xref> and <xref
+      defined in <xref target="I-D.ietf-dots-rfc8782-bis"></xref> and <xref
       target="RFC8783"></xref>; no specific extension is required to the base
       DOTS protocols for deploying DOTS in a multi-homed context.</t>
     </section>
@@ -201,7 +198,24 @@
 
     <section title="Terminology">
       <t>This document makes use of the terms defined in <xref
-      target="RFC8811"></xref> and <xref target="RFC4116"></xref>.</t>
+      target="RFC8811"></xref> and <xref target="RFC4116"></xref>. In
+      particular: </t>
+
+      <t><list style="hanging">
+          <t hangText="Provider-Aggregatable (PA) addresses">are
+          globally-unique addresses assigned by a transit provider to a
+          customer. The addresses are considered "aggregatable" because the
+          set of routes corresponding to the PA addresses are usually covered
+          by an aggregate route set corresponding to the address space
+          operated by the transit provider, from which the assignment was made
+          (Section 2 of <xref target="RFC4116"></xref>).</t>
+
+          <t hangText="Provider-Independent (PI) addresses">are
+          globally-unique addresses which are not assigned by a transit
+          provider, but are provided by some other organisation, usually a
+          Regional Internet Registry (RIR) (Section 2 of <xref
+          target="RFC4116"></xref>).</t>
+        </list></t>
 
       <t>IP indifferently refers to IPv4 or IPv6.</t>
     </section>
@@ -223,15 +237,20 @@
 
             <t>The CPE is connected to multiple provisioning domains (i.e.,
             both fixed and mobile networks). Provisioning domain (PvD) is
-            explained in <xref target="RFC7556"></xref>.</t>
+            explained in <xref target="RFC7556"></xref>. <vspace
+            blankLines="1" />In a typical deployment scenario, these
+            provisioning domains are owned by the same provider (see Section 1
+            of <xref target="RFC8803"></xref>). Such a deployment is meant to
+            seamlessly use both fixed and cellular networks for bonding,
+            faster hand-overs, or better resiliency purposes.</t>
 
             <t>Each of these provisioning domains assigns IP
             addresses/prefixes to the CPE and provides additional
             configuration information such as a list of DNS servers, DNS
             suffixes associated with the network, default gateway address, and
             DOTS server's name <xref target="RFC8973"></xref>. These
-            addresses/prefixes are assumed to be Provider-Aggregatable
-            (PA).</t>
+            addresses/prefixes are assumed to be Provider-Aggregatable (PA).
+            </t>
 
             <t>Because of ingress filtering, packets forwarded by the CPE
             towards a given provisioning domain must be sent with a source IP
@@ -262,7 +281,7 @@
                title="Multi-Homed Enterprise: Single CPE, Multiple Upstream ISPs">
         <t>The scenario shown in <xref target="scmi"></xref> is characterized
         as follows: <list style="symbols">
-            <t>The enterprise network is connected to the Internet using one
+            <t>The enterprise network is connected to the Internet using a
             single router.</t>
 
             <t>That router is connected to multiple provisioning domains
@@ -355,19 +374,19 @@
 
         <c>Single CPE, Multiple provisioning domains</c>
 
-        <c>internal hosts or CPE</c>
+        <c>Internal hosts or CPE</c>
 
         <c>CPE</c>
 
         <c>Multiple CPEs, Multiple provisioning domains</c>
 
-        <c>internal hosts or all CPEs (rtr1 and rtr2)</c>
+        <c>Internal hosts or all CPEs (rtr1 and rtr2)</c>
 
         <c>CPEs (rtr1 and rtr2)</c>
 
         <c>Multi-homed enterprise, Single provisioning domain</c>
 
-        <c>internal hosts or all CPEs (rtr1 and rtr2)</c>
+        <c>Internal hosts or all CPEs (rtr1 and rtr2)</c>
 
         <c>CPEs (rtr1 and rtr2)</c>
       </texttable>
@@ -388,27 +407,25 @@
         source address selection algorithm defined in <xref
         target="RFC6724"></xref> to select the candidate source addresses to
         contact each of these DOTS servers. DOTS sessions MUST be established
-        and maintained with each of the DOTS servers because the mitigation
-        scope of these servers is restricted. The DOTS client SHOULD use the
-        certificate provisioned by a provisioning domain to authenticate
-        itself to the DOTS server(s) provided by the same provisioning
-        domain.</t>
+        and MUST be maintained with each of the DOTS servers because the
+        mitigation scope of each of these servers is restricted. The DOTS
+        client SHOULD use the certificate provisioned by a provisioning domain
+        to authenticate itself to the DOTS server(s) provided by the same
+        provisioning domain.</t>
 
         <t>When conveying a mitigation request to protect the attack
-        target(s), the DOTS client among the DOTS servers available MUST
-        select a DOTS server whose network has assigned the IP prefixes from
-        which target IP prefixes/addresses are derived. This implies that if
-        no appropriate DOTS server is found, the DOTS client MUST NOT send the
-        mitigation request to any other available DOTS server.</t>
+        target(s), the DOTS client MUST select an available DOTS server whose
+        network has assigned the IP prefixes from which target
+        prefixes/addresses are derived. This implies that if no appropriate
+        DOTS server is found, the DOTS client MUST NOT send the mitigation
+        request to any other available DOTS server.</t>
 
         <t>For example, a mitigation request to protect target resources bound
         to a PA IP address/prefix cannot be satisfied by a provisioning domain
-        another domain than the one that owns those addresses/prefixes.
-        Consequently, if a CPE detects a DDoS attack that spreads over all its
-        network attachments, it MUST contact both DOTS servers for mitigation
-        purposes. Nevertheless, if the DDoS attack is received from one single
-        network, then only the DOTS server of that network MUST be
-        contacted.</t>
+        other than the one that owns those addresses/prefixes. Consequently,
+        if a CPE detects a DDoS attack that spreads over all its network
+        attachments, it MUST contact both DOTS servers for mitigation
+        purposes. </t>
 
         <t>The DOTS client MUST be able to associate a DOTS server with each
         provisioning domain. For example, if the DOTS client is provisioned
@@ -503,9 +520,9 @@
         discussed in <xref target="dcpe"></xref> need to be followed by the
         DOTS clients. Because DOTS clients are not embedded in the CPE and
         multiple addreses/prefixes may not be assigned to the DOTS client
-        (typically in an IPv4 context), some issues arise to steer traffic
-        towards the appropriate DOTS server by using the appropriate source IP
-        address. These complications discussed in <xref
+        (typically in an IPv4 context), some issues may arise in how to steer
+        traffic towards the appropriate DOTS server by using the appropriate
+        source IP address. These complications discussed in <xref
         target="RFC4116"></xref> are not specific to DOTS.</t>
 
         <t><figure align="center" anchor="mcms"
@@ -636,12 +653,14 @@
       <xref target="RFC8811"></xref>.</t>
 
       <t>DOTS clients should control the information that they share with peer
-      DOTS servers. For example, if a DOTS client maintains DOTS associations
-      with specific DOTS servers per interconnection link, the DOTS client
-      should not leak information specific to a given link to DOTS servers not
-      authorized to mitigate attacks received on that link. Whether this
-      constraint is relaxed is deployment specific and must be subject to
-      explicit consent from the DOTS client domain administrator.</t>
+      DOTS servers. In particular, if a DOTS client maintains DOTS
+      associations with specific DOTS servers per interconnection link, the
+      DOTS client SHOULD NOT leak information specific to a given link to DOTS
+      servers on different interconnection links that are not authorized to
+      mitigate attacks for that given link. Whether this constraint is relaxed
+      is deployment-specific and must be subject to explicit consent from the
+      DOTS client domain administrator. How to seek for such consent is
+      implementation- and deployment-specific.</t>
     </section>
 
     <section anchor="IANA" title="IANA Considerations">
@@ -680,11 +699,13 @@
 
       <?rfc include='reference.RFC.7556'?>
 
-      <?rfc include='reference.RFC.8782'?>
+      <?rfc include='reference.I-D.ietf-dots-rfc8782-bis'?>
 
       <?rfc include='reference.RFC.8783'?>
 
-      <?rfc include='reference.I-D.ietf-dots-use-cases'?>
+      <?rfc include='reference.RFC.8903'?>
+
+      <?rfc include='reference.RFC.8803'?>
     </references>
   </back>
 </rfc>
