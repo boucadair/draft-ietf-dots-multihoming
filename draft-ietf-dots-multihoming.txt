@@ -143,7 +143,7 @@ Internet-Draft              DOTS Multihoming                   July 2021
        Those specifics need to be taken into account because:
 
        *  Sending a DOTS mitigation request to an arbitrary DOTS server
-          Will not necessarily help in mitigating a DDoS attack.
+          will not necessarily help in mitigating a DDoS attack.
 
        *  Blindly forking all DOTS mitigation requests among all
           available DOTS servers is suboptimal.
