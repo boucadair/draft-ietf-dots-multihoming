@@ -143,7 +143,7 @@
           Those specifics need to be taken into account because: <list
               style="symbols">
               <t>Sending a DOTS mitigation request to an arbitrary DOTS server
-              Will not necessarily help in mitigating a DDoS attack. </t>
+              will not necessarily help in mitigating a DDoS attack. </t>
 
               <t>Blindly forking all DOTS mitigation requests among all
               available DOTS servers is suboptimal.</t>
