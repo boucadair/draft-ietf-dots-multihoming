@@ -10,7 +10,7 @@
 <?rfc inline="yes"?>
 <?rfc compact="yes"?>
 <?rfc subcompact="no"?>
-<rfc category="std" docName="draft-ietf-dots-multihoming-latest"
+<rfc category="info" docName="draft-ietf-dots-multihoming-latest"
      ipr="trust200902">
   <front>
     <title abbrev="DOTS Multihoming">Multi-homing Deployment Considerations
@@ -134,7 +134,7 @@
       (e.g., by using <xref target="RFC8973"></xref>).</t>
 
       <t>DOTS may be deployed within networks that are connected to one single
-      upstream provider. It can also be enabled within networks that are
+      upstream provider. DOTS can also be enabled within networks that are
       multi-homed. The reader may refer to <xref target="RFC3582"></xref> for
       an overview of multi-homing goals and motivations. This document
       discusses DOTS multi-homing considerations. Specifically, the document
@@ -143,7 +143,7 @@
           Those specifics need to be taken into account because: <list
               style="symbols">
               <t>Sending a DOTS mitigation request to an arbitrary DOTS server
-              will not necessarily help in mitigating a DDoS attack. </t>
+              will not necessarily help in mitigating a DDoS attack.</t>
 
               <t>Blindly forking all DOTS mitigation requests among all
               available DOTS servers is suboptimal.</t>
@@ -183,7 +183,7 @@
         </list></t>
 
       <t>Multi-homed DOTS agents are assumed to make use of the protocols
-      defined in <xref target="I-D.ietf-dots-rfc8782-bis"></xref> and <xref
+      defined in <xref target="RFC9132"></xref> and <xref
       target="RFC8783"></xref>; no specific extension is required to the base
       DOTS protocols for deploying DOTS in a multi-homed context.</t>
     </section>
@@ -199,10 +199,10 @@
     <section title="Terminology">
       <t>This document makes use of the terms defined in <xref
       target="RFC8811"></xref> and <xref target="RFC4116"></xref>. In
-      particular: </t>
+      particular:</t>
 
       <t><list style="hanging">
-          <t hangText="Provider-Aggregatable (PA) addresses">are
+          <t hangText="Provider-Aggregatable (PA) addresses:">are
           globally-unique addresses assigned by a transit provider to a
           customer. The addresses are considered "aggregatable" because the
           set of routes corresponding to the PA addresses are usually covered
@@ -210,7 +210,7 @@
           operated by the transit provider, from which the assignment was made
           (Section 2 of <xref target="RFC4116"></xref>).</t>
 
-          <t hangText="Provider-Independent (PI) addresses">are
+          <t hangText="Provider-Independent (PI) addresses:">are
           globally-unique addresses which are not assigned by a transit
           provider, but are provided by some other organisation, usually a
           Regional Internet Registry (RIR) (Section 2 of <xref
@@ -225,9 +225,25 @@
       to DOTS. In the following subsections, only the connections of border
       routers are shown; internal network topologies are not elaborated.</t>
 
+      <t>A multihomed network may enable DOTS for all or a subset of its
+      upstream interconnection links. In such a case, DOTS servers can be
+      explicitly configured or dynamically discovered by a DOTS client using
+      means such as those discussed in <xref target="RFC8973"></xref>. These
+      DOTS servers can be owned by the upstream provider, managed by a
+      third-party (e.g., mitigation service provider), or a combination
+      thereof. </t>
+
+      <t>If a DOTS server is explicitly configured, it is assumed that an
+      interface is also provided to bind the DOTS service to an
+      interconnection link. If no interface is provided, this means that DOTS
+      server can be reached via any active interface.</t>
+
       <t>This section distinguishes between residential CPEs vs. enterprise
       CPEs because PI addresses may be used for enterprises while this is not
       the current practice for residential CPEs.</t>
+
+      <t>In the following subsections, all or a subset of interconnection
+      links are associated with DOTS servers.</t>
 
       <section anchor="sc1" title="Multi-Homed Residential Single CPE">
         <t>The scenario shown in <xref target="rcpe"></xref> is characterized
@@ -249,8 +265,8 @@
             configuration information such as a list of DNS servers, DNS
             suffixes associated with the network, default gateway address, and
             DOTS server's name <xref target="RFC8973"></xref>. These
-            addresses/prefixes are assumed to be Provider-Aggregatable (PA).
-            </t>
+            addresses/prefixes are assumed to be Provider-Aggregatable
+            (PA).</t>
 
             <t>Because of ingress filtering, packets forwarded by the CPE
             towards a given provisioning domain must be sent with a source IP
@@ -327,8 +343,6 @@
         target="sc2"></xref>; the main difference is that dedicated routers
         are used to connect to each provisioning domain.</t>
 
-        <!--CJ: this context is also privileged for mixing PI/PA addresses, imho.-->
-
         <t><figure anchor="mcmi"
             title="Multi-homed Enterprise Network (Multiple CPEs, Multiple ISPs)">
             <artwork><![CDATA[                         +------+    +------+
@@ -401,17 +415,18 @@
         target="sc1"></xref>.</t>
 
         <t>For each provisioning domain, the DOTS client MUST resolve the DOTS
-        server's name provided by a provisioning domain (<xref
-        target="RFC8973"></xref>) using the DNS servers learned from the
-        respective provisioning domain. IPv6-capable DOTS clients MUST use the
-        source address selection algorithm defined in <xref
-        target="RFC6724"></xref> to select the candidate source addresses to
-        contact each of these DOTS servers. DOTS sessions MUST be established
-        and MUST be maintained with each of the DOTS servers because the
-        mitigation scope of each of these servers is restricted. The DOTS
-        client SHOULD use the certificate provisioned by a provisioning domain
-        to authenticate itself to the DOTS server(s) provided by the same
-        provisioning domain.</t>
+        server's name provided by a provisioning domain <xref
+        target="RFC8973"></xref> using the DNS servers learned from the
+        respective provisioning domain (or the DNS servers associated with the
+        interface(s) for which a DOTS server was explicitly configured).
+        IPv6-capable DOTS clients MUST use the source address selection
+        algorithm defined in <xref target="RFC6724"></xref> to select the
+        candidate source addresses to contact each of these DOTS servers. DOTS
+        sessions MUST be established and MUST be maintained with each of the
+        DOTS servers because the mitigation scope of each of these servers is
+        restricted. The DOTS client SHOULD use the certificate provisioned by
+        a provisioning domain to authenticate itself to the DOTS server(s)
+        provided by the same provisioning domain.</t>
 
         <t>When conveying a mitigation request to protect the attack
         target(s), the DOTS client MUST select an available DOTS server whose
@@ -424,17 +439,23 @@
         to a PA IP address/prefix cannot be satisfied by a provisioning domain
         other than the one that owns those addresses/prefixes. Consequently,
         if a CPE detects a DDoS attack that spreads over all its network
-        attachments, it MUST contact both DOTS servers for mitigation
-        purposes. </t>
+        attachments, it MUST contact all DOTS servers for mitigation
+        purposes.</t>
 
         <t>The DOTS client MUST be able to associate a DOTS server with each
         provisioning domain. For example, if the DOTS client is provisioned
         with S1 using DHCP when attaching to a first network and with S2 using
-        Protocol Configuration Option (PCO) when attaching to a second
-        network, the DOTS client must record the interface from which a DOTS
-        server was provisioned. DOTS signaling session to a given DOTS server
-        must be established using the interface from which the DOTS server was
-        provisioned.</t>
+        Protocol Configuration Option (PCO) <xref target="TS.24008"></xref>
+        when attaching to a second network, the DOTS client must record the
+        interface from which a DOTS server was provisioned. DOTS signaling
+        session to a given DOTS server must be established using the interface
+        from which the DOTS server was provisioned. If a DOTS server is
+        explicitly configured, DOTS signaling with that server must be
+        established via the interfaces that are indicated in the explicit
+        configuration or via any active interface if no interface is
+        configured. </t>
+
+        <t></t>
 
         <t><figure align="center" anchor="dotsrcpe"
             title="DOTS Associations for a Multihomed Residential CPE">
@@ -470,17 +491,6 @@
             requests towards upstream DOTS servers.</t>
           </list></t>
 
-        <t>When PA addresses/prefixes are in use, the same considerations
-        discussed in <xref target="dcpe"></xref> need to be followed by the
-        DOTS gateway to contact its DOTS server(s). The DOTS gateways can be
-        reachable from DOTS clients by using an unicast address or an anycast
-        address.</t>
-
-        <t>Nevertheless, when PI addresses/prefixes are assigned, the DOTS
-        gateway MUST send mitigation requests to all its DOTS servers.
-        Otherwise, the attack traffic may still be delivered via the ISP which
-        hasn&rsquo;t received the mitigation request.</t>
-
         <t><figure align="center" anchor="dotsmcgms"
             title="Multiple DOTS Clients, Single DOTS Gateway, Multiple DOTS Servers">
             <artwork align="center"><![CDATA[                               +--+
@@ -498,7 +508,16 @@
                                +--+
                        DOTS Server Domain #2
 ]]></artwork>
-          </figure></t>
+          </figure>When PA addresses/prefixes are in use, the same
+        considerations discussed in <xref target="dcpe"></xref> need to be
+        followed by the DOTS gateway to contact its DOTS server(s). The DOTS
+        gateways can be reachable from DOTS clients by using an unicast
+        address or an anycast address.</t>
+
+        <t>Nevertheless, when PI addresses/prefixes are assigned, the DOTS
+        gateway MUST send mitigation requests to all its DOTS servers.
+        Otherwise, the attack traffic may still be delivered via the ISP which
+        hasn&rsquo;t received the mitigation request.</t>
 
         <t>An alternate deployment model is depicted in <xref
         target="mcms"></xref>. This deployment assumes that:</t>
@@ -512,9 +531,33 @@
             servers.</t>
           </list></t>
 
+        <t><figure align="center" anchor="mcms"
+            title="Multiple DOTS Clients, Multiple DOTS Servers">
+            <artwork align="center"><![CDATA[       ..........                   
+       .  +--+  .      
+ +--------|C1|--------+                
+ |     .  +--+  .     |      
+ |     .        .     |    
++--+   .  +--+  .   +--+
+|S2|------|C3|------|S1|
++--+   .  +--+  .   +--+
+ |     .        .     |    
+ |     .  +--+  .     |     
+ +--------|C2|--------+     
+       .  +--+  .
+       ..........    
+      DOTS Client 
+        Domain          
+]]></artwork>
+          </figure></t>
+
         <t>If PI addresses/prefixes are in use, the DOTS client MUST send a
         mitigation request to all the DOTS servers. The use of anycast
-        addresses to reach the DOTS servers is NOT RECOMMENDED.</t>
+        addresses to reach the DOTS servers is NOT RECOMMENDED. If anycast
+        addresses are used to reach multiple DOTS servers, the CPE may not be
+        able to select the appropriate provisioning domain to which the
+        mitigation request should be forwarded. As a consequence, the request
+        may not be forwarded to the appropriate DOTS server.</t>
 
         <t>If PA addresses/prefixes are used, the same considerations
         discussed in <xref target="dcpe"></xref> need to be followed by the
@@ -524,24 +567,6 @@
         traffic towards the appropriate DOTS server by using the appropriate
         source IP address. These complications discussed in <xref
         target="RFC4116"></xref> are not specific to DOTS.</t>
-
-        <t><figure align="center" anchor="mcms"
-            title="Multiple DOTS Clients, Multiple DOTS Servers">
-            <artwork align="center"><![CDATA[       ..........                   
-       .  +--+  .      
- +--------|C1|--------+                
- |     .  +--+  .     |      
-+--+   .  +--+  .   +--+
-|S2|------|C3|------|S1|
-+--+   .  +--+  .   +--+
- |     .  +--+  .     |     
- +--------|C2|--------+     
-       .  +--+  .
-       ..........    
-      DOTS Client 
-        Domain          
-]]></artwork>
-          </figure></t>
 
         <t>Another deployment approach is to enable many DOTS clients; each of
         them is responsible for handling communications with a specific DOTS
@@ -562,17 +587,16 @@
 ]]></artwork>
           </figure></t>
 
-        <t>Each DOTS client SHOULD be provided with policies (e.g., a prefix
-        filter that will be against DDoS detection alarms) that will trigger
-        DOTS communications with the DOTS servers. Such policies will help the
-        DOTS client to select the appropriate destination DOTS server.</t>
+        <t>For both deployments depicted in Figures <xref format="counter"
+        target="mcms"></xref> and <xref format="counter"
+        target="scms"></xref>, each DOTS client SHOULD be provided with
+        policies (e.g., a prefix filter that will be against DDoS detection
+        alarms) that will trigger DOTS communications with the DOTS servers.
+        Such policies will help the DOTS client to select the appropriate
+        destination DOTS server.</t>
 
         <t>The CPE MUST select the appropriate source IP address when
-        forwarding DOTS messages received from an internal DOTS client. If
-        anycast addresses are used to reach DOTS servers, the CPE may not be
-        able to select the appropriate provisioning domain to which the
-        mitigation request should be forwarded. As a consequence, the request
-        may not be forwarded to the appropriate DOTS server.</t>
+        forwarding DOTS messages received from an internal DOTS client. </t>
       </section>
 
       <section title="Multi-Homed Enterprise: Multiple CPEs, Multiple Upstream ISPs">
@@ -593,11 +617,26 @@
             of the provisioning domain.</t>
           </list></t>
 
+        <t><figure align="center" anchor="mcmgms"
+            title="Multiple DOTS Clients, Multiple DOTS Gateways, Multiple DOTS Servers">
+            <artwork align="center"><![CDATA[                         +---+         
+            +------------| C1|----+                
+            |            +---+    |      
++--+      +-+-+      +---+      +-+-+      +--+  
+|S2|------|G2 |------| C3|------|G1 |------|S1|
++--+      +-+-+      +---+      +-+-+      +--+ 
+            |            +---+    |     
+            +------------| C2|----+     
+                         +---+           
+]]></artwork>
+          </figure></t>
+
         <t>When PI addresses/prefixes are used, DOTS clients MUST contact all
         the DOTS gateways to send a DOTS message. DOTS gateways will then
-        relay the request to the DOTS server. Note that the use of anycast
-        addresses is NOT RECOMMENDED to establish DOTS sessions between DOTS
-        clients and DOTS gateways.</t>
+        relay the request to the DOTS servers. Note that anycast addresses
+        cannot be used to establish DOTS sessions between DOTS clients and
+        DOTS gateways because only one DOTS gateway will receive the
+        mitigation request.</t>
 
         <t>When PA addresses/prefixes are used, but no filter rules are
         provided to DOTS clients, the latter MUST contact all DOTS gateways
@@ -612,20 +651,7 @@
         reach. The use of anycast addresses is NOT RECOMMENDED to reach DOTS
         gateways.</t>
 
-        <t><figure align="center" anchor="mcmgms"
-            title="Multiple DOTS Clients, Multiple DOTS Gateways, Multiple DOTS Servers">
-            <artwork align="center"><![CDATA[                 
-                         +---+         
-            +------------| C1|----+                
-            |            +---+    |      
-+--+      +-+-+      +---+      +-+-+      +--+  
-|S2|------|G2 |------| C3|------|G1 |------|S1|
-+--+      +-+-+      +---+      +-+-+      +--+ 
-            |            +---+    |     
-            +------------| C2|----+     
-                         +---+           
-]]></artwork>
-          </figure></t>
+        <t></t>
       </section>
 
       <section title="Multi-Homed Enterprise: Single ISP">
@@ -699,13 +725,27 @@
 
       <?rfc include='reference.RFC.7556'?>
 
-      <?rfc include='reference.I-D.ietf-dots-rfc8782-bis'?>
+      <?rfc include='reference.RFC.9132'?>
 
       <?rfc include='reference.RFC.8783'?>
 
       <?rfc include='reference.RFC.8903'?>
 
       <?rfc include='reference.RFC.8803'?>
+
+      <reference anchor="TS.24008"
+                 target="http://www.3gpp.org/DynaReport/24008.htm">
+        <front>
+          <title>Mobile radio interface Layer 3 specification; Core network
+          protocols; Stage 3 (Release 16)</title>
+
+          <author fullname="" surname="">
+            <organization>3GPP</organization>
+          </author>
+
+          <date day="0" month="December" year="2019" />
+        </front>
+      </reference>
     </references>
   </back>
 </rfc>
