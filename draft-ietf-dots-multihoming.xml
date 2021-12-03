@@ -231,12 +231,12 @@
       means such as those discussed in <xref target="RFC8973"></xref>. These
       DOTS servers can be owned by the upstream provider, managed by a
       third-party (e.g., mitigation service provider), or a combination
-      thereof. </t>
+      thereof.</t>
 
       <t>If a DOTS server is explicitly configured, it is assumed that an
       interface is also provided to bind the DOTS service to an
-      interconnection link. If no interface is provided, this means that DOTS
-      server can be reached via any active interface.</t>
+      interconnection link. If no interface is provided, this means that the
+      DOTS server can be reached via any active interface.</t>
 
       <t>This section distinguishes between residential CPEs vs. enterprise
       CPEs because PI addresses may be used for enterprises while this is not
@@ -453,7 +453,7 @@
         explicitly configured, DOTS signaling with that server must be
         established via the interfaces that are indicated in the explicit
         configuration or via any active interface if no interface is
-        configured. </t>
+        configured.</t>
 
         <t></t>
 
@@ -596,7 +596,7 @@
         destination DOTS server.</t>
 
         <t>The CPE MUST select the appropriate source IP address when
-        forwarding DOTS messages received from an internal DOTS client. </t>
+        forwarding DOTS messages received from an internal DOTS client.</t>
       </section>
 
       <section title="Multi-Homed Enterprise: Multiple CPEs, Multiple Upstream ISPs">
@@ -679,12 +679,12 @@
       <xref target="RFC8811"></xref>.</t>
 
       <t>DOTS clients should control the information that they share with peer
-      DOTS servers. In particular, if a DOTS client maintains DOTS
-      associations with specific DOTS servers per interconnection link, the
-      DOTS client SHOULD NOT leak information specific to a given link to DOTS
-      servers on different interconnection links that are not authorized to
-      mitigate attacks for that given link. Whether this constraint is relaxed
-      is deployment-specific and must be subject to explicit consent from the
+      DOTS servers. In particular, if a DOTS client maintains DOTS sessions
+      with specific DOTS servers per interconnection link, the DOTS client
+      SHOULD NOT leak information specific to a given link to DOTS servers on
+      different interconnection links that are not authorized to mitigate
+      attacks for that given link. Whether this constraint is relaxed is
+      deployment-specific and must be subject to explicit consent from the
       DOTS client domain administrator. How to seek for such consent is
       implementation- and deployment-specific.</t>
     </section>
@@ -698,6 +698,8 @@
       Christian Jacquenet for sharing their comments on the mailing list.</t>
 
       <t>Thanks to Kirill Kasavchenko for the comments.</t>
+
+      <t>Thanks to Kathleen Moriarty for the secdir review. </t>
     </section>
   </middle>
 
