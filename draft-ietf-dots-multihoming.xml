@@ -87,7 +87,8 @@
     <abstract>
       <t>This document discusses multi-homing considerations for
       Distributed-Denial-of-Service Open Threat Signaling (DOTS). The goal is
-      to provide some guidance for DOTS clients/gateways when multihomed.</t>
+      to provide some guidance for DOTS clients and client-domain DOTS
+      gateways when multihomed.</t>
 
       <!--
 -->
@@ -178,8 +179,8 @@
               addresses</t>
             </list></t>
 
-          <t>Describe the recommended behavior of DOTS clients and gateways
-          for each case.</t>
+          <t>Describe the recommended behavior of DOTS clients and
+          client-domain DOTS gateways for each case.</t>
         </list></t>
 
       <t>Multi-homed DOTS agents are assumed to make use of the protocols
@@ -378,7 +379,7 @@
 
         <ttcol align="center">DOTS client</ttcol>
 
-        <ttcol align="center">DOTS gateway</ttcol>
+        <ttcol align="center">Client-domain DOTS gateway</ttcol>
 
         <c>Residential CPE</c>
 
@@ -479,16 +480,17 @@
 
       <section title="Multi-Homed Enterprise: Single CPE, Multiple Upstream ISPs">
         <t><xref target="dotsmcgms"></xref> illustrates a first set of DOTS
-        associations that can be established with a DOTS gateway, which is
-        enabled within the context of the scenario described in <xref
-        target="sc2"></xref>. This deployment is characterized as follows:</t>
+        associations that can be established with a client-domain DOTS
+        gateway, which is enabled within the context of the scenario described
+        in <xref target="sc2"></xref>. This deployment is characterized as
+        follows:</t>
 
         <t><list style="symbols">
             <t>One of more DOTS clients are enabled in hosts located in the
             internal network.</t>
 
-            <t>A DOTS gateway is enabled to aggregate and then relay the
-            requests towards upstream DOTS servers.</t>
+            <t>A client-domain DOTS gateway is enabled to aggregate and then
+            relay the requests towards upstream DOTS servers.</t>
           </list></t>
 
         <t><figure align="center" anchor="dotsmcgms"
@@ -510,14 +512,16 @@
 ]]></artwork>
           </figure>When PA addresses/prefixes are in use, the same
         considerations discussed in <xref target="dcpe"></xref> need to be
-        followed by the DOTS gateway to contact its DOTS server(s). The DOTS
-        gateways can be reachable from DOTS clients by using an unicast
-        address or an anycast address.</t>
+        followed by the client-domain DOTS gateway to contact its DOTS
+        server(s). The client-domain DOTS gateways can be reachable from DOTS
+        clients by using an unicast address or an anycast address (Section
+        3.2.4 of <xref target="RFC8811"></xref>).</t>
 
-        <t>Nevertheless, when PI addresses/prefixes are assigned, the DOTS
-        gateway MUST send mitigation requests to all its DOTS servers.
-        Otherwise, the attack traffic may still be delivered via the ISP which
-        hasn&rsquo;t received the mitigation request.</t>
+        <t>Nevertheless, when PI addresses/prefixes are assigned and absent
+        any policy, the client-domain DOTS gateway MUST send mitigation
+        requests to all its DOTS servers. Otherwise, the attack traffic may
+        still be delivered via the ISP which hasn&rsquo;t received the
+        mitigation request.</t>
 
         <t>An alternate deployment model is depicted in <xref
         target="mcms"></xref>. This deployment assumes that:</t>
@@ -553,11 +557,11 @@
 
         <t>If PI addresses/prefixes are in use, the DOTS client MUST send a
         mitigation request to all the DOTS servers. The use of anycast
-        addresses to reach the DOTS servers is NOT RECOMMENDED. If anycast
-        addresses are used to reach multiple DOTS servers, the CPE may not be
-        able to select the appropriate provisioning domain to which the
-        mitigation request should be forwarded. As a consequence, the request
-        may not be forwarded to the appropriate DOTS server.</t>
+        addresses to reach these DOTS servers is NOT RECOMMENDED. If a
+        well-known anycast address is used to reach multiple DOTS servers, the
+        CPE may not be able to select the appropriate provisioning domain to
+        which the mitigation request should be forwarded. As a consequence,
+        the request may not be forwarded to the appropriate DOTS server.</t>
 
         <t>If PA addresses/prefixes are used, the same considerations
         discussed in <xref target="dcpe"></xref> need to be followed by the
@@ -611,10 +615,11 @@
             <t>DOTS clients are enabled in hosts located in the internal
             network.</t>
 
-            <t>A DOTS gateway is enabled in each CPE (rtr1, rtr2).</t>
+            <t>A client-domain DOTS gateway is enabled in each CPE (rtr1,
+            rtr2).</t>
 
-            <t>Each of these DOTS gateways communicates with the DOTS server
-            of the provisioning domain.</t>
+            <t>Each of these client-domain DOTS gateways communicates with the
+            DOTS server of the provisioning domain.</t>
           </list></t>
 
         <t><figure align="center" anchor="mcmgms"
@@ -632,26 +637,25 @@
           </figure></t>
 
         <t>When PI addresses/prefixes are used, DOTS clients MUST contact all
-        the DOTS gateways to send a DOTS message. DOTS gateways will then
-        relay the request to the DOTS servers. Note that anycast addresses
-        cannot be used to establish DOTS sessions between DOTS clients and
-        DOTS gateways because only one DOTS gateway will receive the
-        mitigation request.</t>
+        the client-domain DOTS gateways to send a DOTS message. Client-domain
+        DOTS gateways will then relay the request to the DOTS servers as a
+        function of local policy. Note that anycast addresses cannot be used
+        to establish DOTS sessions between DOTS clients and client-domain DOTS
+        gateways because only one DOTS gateway will receive the mitigation
+        request.</t>
 
         <t>When PA addresses/prefixes are used, but no filter rules are
-        provided to DOTS clients, the latter MUST contact all DOTS gateways
-        simultaneously to send a DOTS message. Upon receipt of a request by a
-        DOTS gateway, it MUST check whether the request is to be forwarded
-        upstream (if the target IP prefix is managed by the upstream server)
-        or rejected.</t>
+        provided to DOTS clients, the latter MUST contact all client-domain
+        DOTS gateways simultaneously to send a DOTS message. Upon receipt of a
+        request by a client-domain DOTS gateway, it MUST check whether the
+        request is to be forwarded upstream (if the target IP prefix is
+        managed by the upstream server) or rejected.</t>
 
         <t>When PA addresses/prefixes are used, but specific filter rules are
         provided to DOTS clients using some means that are out of scope of
-        this document, the clients MUST select the appropriate DOTS gateway to
-        reach. The use of anycast addresses is NOT RECOMMENDED to reach DOTS
-        gateways.</t>
-
-        <t></t>
+        this document, the clients MUST select the appropriate client-domain
+        DOTS gateway to reach. The use of anycast addresses is NOT RECOMMENDED
+        to reach client-domain DOTS gateways.</t>
       </section>
 
       <section title="Multi-Homed Enterprise: Single ISP">
@@ -699,7 +703,8 @@
 
       <t>Thanks to Kirill Kasavchenko for the comments.</t>
 
-      <t>Thanks to Kathleen Moriarty for the secdir review. </t>
+      <t>Thanks to Kathleen Moriarty for the secdir review and Joel Jaeggli
+      for the opsdir review.</t>
     </section>
   </middle>
 
