@@ -330,7 +330,7 @@
                    +---------++---------+     Enterprise Network           
                              ||     
                           +--++-+ 
-                          | rtr | 
+                          | CPE | 
                           +-----+ 
                                 ... (Internal Network)
                             
@@ -342,7 +342,7 @@
                title="Multi-homed Enterprise: Multiple CPEs, Multiple Upstream ISPs">
         <t>This scenario is similar to the one described in <xref
         target="sc2"></xref>; the main difference is that dedicated routers
-        are used to connect to each provisioning domain.</t>
+        (rtr1 and rtr2) are used to connect to each provisioning domain.</t>
 
         <t><figure anchor="mcmi"
             title="Multi-homed Enterprise Network (Multiple CPEs, Multiple ISPs)">
@@ -413,21 +413,23 @@
         <t><xref target="dotsrcpe"></xref> depicts DOTS sessions that need to
         be established between a DOTS client (C) and two DOTS servers (S1, S2)
         within the context of the scenario described in <xref
-        target="sc1"></xref>.</t>
+        target="sc1"></xref>. As listed in <xref target="dep"></xref>, the
+        DOTS client is hosted by the residential CPE. </t>
 
-        <t>For each provisioning domain, the DOTS client MUST resolve the DOTS
-        server's name provided by a provisioning domain <xref
-        target="RFC8973"></xref> using the DNS servers learned from the
-        respective provisioning domain (or the DNS servers associated with the
-        interface(s) for which a DOTS server was explicitly configured).
-        IPv6-capable DOTS clients MUST use the source address selection
-        algorithm defined in <xref target="RFC6724"></xref> to select the
-        candidate source addresses to contact each of these DOTS servers. DOTS
-        sessions MUST be established and MUST be maintained with each of the
-        DOTS servers because the mitigation scope of each of these servers is
-        restricted. The DOTS client SHOULD use the certificate provisioned by
-        a provisioning domain to authenticate itself to the DOTS server(s)
-        provided by the same provisioning domain.</t>
+        <t>The DOTS client MUST resolve the DOTS server's name provided by
+        each provisioning domain using either the DNS servers learned from the
+        respective provisioning domain or from the DNS servers associated with
+        the interface(s) for which a DOTS server was explicitly configured
+        (<xref target="msc"></xref>). IPv6-capable DOTS clients MUST use the
+        source address selection algorithm defined in <xref
+        target="RFC6724"></xref> to select the candidate source addresses to
+        contact each of these DOTS servers. DOTS sessions MUST be established
+        and MUST be maintained with each of the DOTS servers because the
+        mitigation scope of each of these servers is restricted. The DOTS
+        client SHOULD use the certificate provided by a provisioning domain to
+        authenticate itself to the DOTS server(s) provided by the same
+        provisioning domain. How such a certificate is provided to the DOTS
+        client is out of the scope of this document. </t>
 
         <t>When conveying a mitigation request to protect the attack
         target(s), the DOTS client MUST select an available DOTS server whose
@@ -444,17 +446,17 @@
         purposes.</t>
 
         <t>The DOTS client MUST be able to associate a DOTS server with each
-        provisioning domain. For example, if the DOTS client is provisioned
-        with S1 using DHCP when attaching to a first network and with S2 using
-        Protocol Configuration Option (PCO) <xref target="TS.24008"></xref>
-        when attaching to a second network, the DOTS client must record the
-        interface from which a DOTS server was provisioned. DOTS signaling
-        session to a given DOTS server must be established using the interface
-        from which the DOTS server was provisioned. If a DOTS server is
-        explicitly configured, DOTS signaling with that server must be
-        established via the interfaces that are indicated in the explicit
-        configuration or via any active interface if no interface is
-        configured.</t>
+        provisioning domain it serves. For example, if the DOTS client is
+        provisioned with S1 using DHCP when attaching to a first network and
+        with S2 using Protocol Configuration Option (PCO) <xref
+        target="TS.24008"></xref> when attaching to a second network, the DOTS
+        client must record the interface from which a DOTS server was
+        provisioned. DOTS signaling session to a given DOTS server must be
+        established using the interface from which the DOTS server was
+        provisioned. If a DOTS server is explicitly configured, DOTS signaling
+        with that server must be established via the interfaces that are
+        indicated in the explicit configuration or via any active interface if
+        no interface is configured.</t>
 
         <t></t>
 
@@ -468,7 +470,7 @@
       +---+/  
       | C |
       +---+\  
-            \ 
+       CPE  \ 
              \
               \           +--+
                 ----------|S2|
@@ -479,11 +481,11 @@
       </section>
 
       <section title="Multi-Homed Enterprise: Single CPE, Multiple Upstream ISPs">
-        <t><xref target="dotsmcgms"></xref> illustrates a first set of DOTS
-        associations that can be established with a client-domain DOTS
-        gateway, which is enabled within the context of the scenario described
-        in <xref target="sc2"></xref>. This deployment is characterized as
-        follows:</t>
+        <t><xref target="dotsmcgms"></xref> illustrates the DOTS sessions that
+        can be established with a client-domain DOTS gateway (hosted within
+        the CPE as per <xref target="dep"></xref>), which is enabled within
+        the context of the scenario described in <xref target="sc2"></xref>.
+        This deployment is characterized as follows:</t>
 
         <t><list style="symbols">
             <t>One of more DOTS clients are enabled in hosts located in the
@@ -495,20 +497,22 @@
 
         <t><figure align="center" anchor="dotsmcgms"
             title="Multiple DOTS Clients, Single DOTS Gateway, Multiple DOTS Servers">
-            <artwork align="center"><![CDATA[                               +--+
-                     ----------|S1|
-    +---+          /           +--+
-    | C1|----+    /     DOTS Server Domain #1         
-    +---+    |   /
+            <artwork align="center"><![CDATA[                                +--+
+                      ----------|S1|
+    +---+           /           +--+
+    | C1|----+     /     DOTS Server Domain #1         
+    +---+    |    /
+             |   /
 +---+      +-+-+/  
 | C3|------| G |
 +---+      +-+-+\  
-    +---+    |   \ 
-    | C2|----+    \
-    +---+          \           +--+
-                     ----------|S2|
-                               +--+
-                       DOTS Server Domain #2
+            CPE  \ 
+    +---+    |    \ 
+    | C2|----+     \
+    +---+           \           +--+
+                      ----------|S2|
+                                +--+
+                         DOTS Server Domain #2
 ]]></artwork>
           </figure>When PA addresses/prefixes are in use, the same
         considerations discussed in <xref target="dcpe"></xref> need to be
@@ -566,7 +570,7 @@
         <t>If PA addresses/prefixes are used, the same considerations
         discussed in <xref target="dcpe"></xref> need to be followed by the
         DOTS clients. Because DOTS clients are not embedded in the CPE and
-        multiple addreses/prefixes may not be assigned to the DOTS client
+        multiple addresses/prefixes may not be assigned to the DOTS client
         (typically in an IPv4 context), some issues may arise in how to steer
         traffic towards the appropriate DOTS server by using the appropriate
         source IP address. These complications discussed in <xref
@@ -597,10 +601,9 @@
         policies (e.g., a prefix filter that will be against DDoS detection
         alarms) that will trigger DOTS communications with the DOTS servers.
         Such policies will help the DOTS client to select the appropriate
-        destination DOTS server.</t>
-
-        <t>The CPE MUST select the appropriate source IP address when
-        forwarding DOTS messages received from an internal DOTS client.</t>
+        destination DOTS server. The CPE MUST select the appropriate source IP
+        address when forwarding DOTS messages received from an internal DOTS
+        client.</t>
       </section>
 
       <section title="Multi-Homed Enterprise: Multiple CPEs, Multiple Upstream ISPs">
@@ -615,8 +618,8 @@
             <t>DOTS clients are enabled in hosts located in the internal
             network.</t>
 
-            <t>A client-domain DOTS gateway is enabled in each CPE (rtr1,
-            rtr2).</t>
+            <t>A client-domain DOTS gateway is enabled in each CPE (rtr1 and
+            rtr2 per <xref target="dep"></xref>).</t>
 
             <t>Each of these client-domain DOTS gateways communicates with the
             DOTS server of the provisioning domain.</t>
@@ -627,9 +630,11 @@
             <artwork align="center"><![CDATA[                         +---+         
             +------------| C1|----+                
             |            +---+    |      
+            |                     | 
 +--+      +-+-+      +---+      +-+-+      +--+  
 |S2|------|G2 |------| C3|------|G1 |------|S1|
 +--+      +-+-+      +---+      +-+-+      +--+ 
+          rtr2                   rtr1    
             |            +---+    |     
             +------------| C2|----+     
                          +---+           
@@ -705,6 +710,8 @@
 
       <t>Thanks to Kathleen Moriarty for the secdir review and Joel Jaeggli
       for the opsdir review.</t>
+
+      <t>Many thanks to Roman Danyliw for the careful AD review. </t>
     </section>
   </middle>
 
