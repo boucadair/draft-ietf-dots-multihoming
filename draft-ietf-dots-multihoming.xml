@@ -10,7 +10,7 @@
 <?rfc inline="yes"?>
 <?rfc compact="yes"?>
 <?rfc subcompact="no"?>
-<rfc category="info" docName="draft-ietf-dots-multihoming-latest"
+<rfc category="info" docName="draft-ietf-dots-multihoming-11"
      ipr="trust200902">
   <front>
     <title abbrev="DOTS Multihoming">Multi-homing Deployment Considerations
@@ -36,8 +36,8 @@
       </address>
     </author>
 
-    <author fullname="Tirumaleswar Reddy" initials="T." surname="Reddy">
-      <organization abbrev="McAfee">McAfee, Inc.</organization>
+    <author fullname="Tirumaleswar Reddy.K" initials="T." surname="Reddy.K">
+      <organization>Akamai</organization>
 
       <address>
         <postal>
@@ -52,7 +52,7 @@
           <country>India</country>
         </postal>
 
-        <email>TirumaleswarReddy_Konda@McAfee.com</email>
+        <email>kondtir@gmail.com</email>
       </address>
     </author>
 
@@ -185,8 +185,9 @@
 
       <t>Multi-homed DOTS agents are assumed to make use of the protocols
       defined in <xref target="RFC9132"></xref> and <xref
-      target="RFC8783"></xref>; no specific extension is required to the base
-      DOTS protocols for deploying DOTS in a multi-homed context.</t>
+      target="RFC8783"></xref>. This document does not require any specific
+      extension to the base DOTS protocols for deploying DOTS in a multi-homed
+      context.</t>
     </section>
 
     <section title="Requirements Language">
@@ -414,7 +415,7 @@
         be established between a DOTS client (C) and two DOTS servers (S1, S2)
         within the context of the scenario described in <xref
         target="sc1"></xref>. As listed in <xref target="dep"></xref>, the
-        DOTS client is hosted by the residential CPE. </t>
+        DOTS client is hosted by the residential CPE.</t>
 
         <t>The DOTS client MUST resolve the DOTS server's name provided by
         each provisioning domain using either the DNS servers learned from the
@@ -429,7 +430,7 @@
         client SHOULD use the certificate provided by a provisioning domain to
         authenticate itself to the DOTS server(s) provided by the same
         provisioning domain. How such a certificate is provided to the DOTS
-        client is out of the scope of this document. </t>
+        client is out of the scope of this document.</t>
 
         <t>When conveying a mitigation request to protect the attack
         target(s), the DOTS client MUST select an available DOTS server whose
@@ -708,10 +709,10 @@
 
       <t>Thanks to Kirill Kasavchenko for the comments.</t>
 
-      <t>Thanks to Kathleen Moriarty for the secdir review and Joel Jaeggli
-      for the opsdir review.</t>
+      <t>Thanks to Kathleen Moriarty for the secdir review, Joel Jaeggli for
+      the opsdir review, and Mirja K&uuml;hlewind for the tsvart review.</t>
 
-      <t>Many thanks to Roman Danyliw for the careful AD review. </t>
+      <t>Many thanks to Roman Danyliw for the careful AD review.</t>
     </section>
   </middle>
 

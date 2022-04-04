@@ -4,16 +4,16 @@
 
 Network Working Group                                       M. Boucadair
 Internet-Draft                                                    Orange
-Intended status: Informational                                  T. Reddy
-Expires: 13 August 2022                                           McAfee
+Intended status: Informational                                T. Reddy.K
+Expires: 6 October 2022                                           Akamai
                                                                   W. Pan
                                                      Huawei Technologies
-                                                         9 February 2022
+                                                            4 April 2022
 
 
 Multi-homing Deployment Considerations for Distributed-Denial-of-Service
                       Open Threat Signaling (DOTS)
-                   draft-ietf-dots-multihoming-latest
+                     draft-ietf-dots-multihoming-11
 
 Abstract
 
@@ -37,7 +37,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 13 August 2022.
+   This Internet-Draft will expire on 6 October 2022.
 
 Copyright Notice
 
@@ -53,9 +53,9 @@ Copyright Notice
 
 
 
-Boucadair, et al.        Expires 13 August 2022                 [Page 1]
+Boucadair, et al.        Expires 6 October 2022                 [Page 1]
 
-Internet-Draft              DOTS Multihoming               February 2022
+Internet-Draft              DOTS Multihoming                  April 2022
 
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Boucadair, et al.        Expires 13 August 2022                 [Page 2]
+Boucadair, et al.        Expires 6 October 2022                 [Page 2]
 
-Internet-Draft              DOTS Multihoming               February 2022
+Internet-Draft              DOTS Multihoming                  April 2022
 
 
    to more efficient responsive actions.  [RFC8903] identifies a set of
@@ -165,9 +165,9 @@ Internet-Draft              DOTS Multihoming               February 2022
 
 
 
-Boucadair, et al.        Expires 13 August 2022                 [Page 3]
+Boucadair, et al.        Expires 6 October 2022                 [Page 3]
 
-Internet-Draft              DOTS Multihoming               February 2022
+Internet-Draft              DOTS Multihoming                  April 2022
 
 
    3.  Provide guidelines and recommendations for placing DOTS requests
@@ -194,9 +194,9 @@ Internet-Draft              DOTS Multihoming               February 2022
       domain DOTS gateways for each case.
 
    Multi-homed DOTS agents are assumed to make use of the protocols
-   defined in [RFC9132] and [RFC8783]; no specific extension is required
-   to the base DOTS protocols for deploying DOTS in a multi-homed
-   context.
+   defined in [RFC9132] and [RFC8783].  This document does not require
+   any specific extension to the base DOTS protocols for deploying DOTS
+   in a multi-homed context.
 
 2.  Requirements Language
 
@@ -221,9 +221,9 @@ Internet-Draft              DOTS Multihoming               February 2022
 
 
 
-Boucadair, et al.        Expires 13 August 2022                 [Page 4]
+Boucadair, et al.        Expires 6 October 2022                 [Page 4]
 
-Internet-Draft              DOTS Multihoming               February 2022
+Internet-Draft              DOTS Multihoming                  April 2022
 
 
    Provider-Independent (PI) addresses:  are globally-unique addresses
@@ -277,9 +277,9 @@ Internet-Draft              DOTS Multihoming               February 2022
 
 
 
-Boucadair, et al.        Expires 13 August 2022                 [Page 5]
+Boucadair, et al.        Expires 6 October 2022                 [Page 5]
 
-Internet-Draft              DOTS Multihoming               February 2022
+Internet-Draft              DOTS Multihoming                  April 2022
 
 
       In a typical deployment scenario, these provisioning domains are
@@ -333,9 +333,9 @@ Internet-Draft              DOTS Multihoming               February 2022
 
 
 
-Boucadair, et al.        Expires 13 August 2022                 [Page 6]
+Boucadair, et al.        Expires 6 October 2022                 [Page 6]
 
-Internet-Draft              DOTS Multihoming               February 2022
+Internet-Draft              DOTS Multihoming                  April 2022
 
 
    2.  PA addresses/prefixes: Each of the provisioning domains assigns
@@ -389,9 +389,9 @@ Internet-Draft              DOTS Multihoming               February 2022
 
 
 
-Boucadair, et al.        Expires 13 August 2022                 [Page 7]
+Boucadair, et al.        Expires 6 October 2022                 [Page 7]
 
-Internet-Draft              DOTS Multihoming               February 2022
+Internet-Draft              DOTS Multihoming                  April 2022
 
 
 5.  DOTS Multi-homing Deployment Considerations
@@ -445,9 +445,9 @@ Internet-Draft              DOTS Multihoming               February 2022
 
 
 
-Boucadair, et al.        Expires 13 August 2022                 [Page 8]
+Boucadair, et al.        Expires 6 October 2022                 [Page 8]
 
-Internet-Draft              DOTS Multihoming               February 2022
+Internet-Draft              DOTS Multihoming                  April 2022
 
 
    The DOTS client MUST resolve the DOTS server's name provided by each
@@ -501,9 +501,9 @@ Internet-Draft              DOTS Multihoming               February 2022
 
 
 
-Boucadair, et al.        Expires 13 August 2022                 [Page 9]
+Boucadair, et al.        Expires 6 October 2022                 [Page 9]
 
-Internet-Draft              DOTS Multihoming               February 2022
+Internet-Draft              DOTS Multihoming                  April 2022
 
 
                                             +--+
@@ -557,9 +557,9 @@ Internet-Draft              DOTS Multihoming               February 2022
 
 
 
-Boucadair, et al.        Expires 13 August 2022                [Page 10]
+Boucadair, et al.        Expires 6 October 2022                [Page 10]
 
-Internet-Draft              DOTS Multihoming               February 2022
+Internet-Draft              DOTS Multihoming                  April 2022
 
 
        Figure 6: Multiple DOTS Clients, Single DOTS Gateway, Multiple
@@ -613,9 +613,9 @@ Internet-Draft              DOTS Multihoming               February 2022
 
 
 
-Boucadair, et al.        Expires 13 August 2022                [Page 11]
+Boucadair, et al.        Expires 6 October 2022                [Page 11]
 
-Internet-Draft              DOTS Multihoming               February 2022
+Internet-Draft              DOTS Multihoming                  April 2022
 
 
    If PI addresses/prefixes are in use, the DOTS client MUST send a
@@ -669,9 +669,9 @@ Internet-Draft              DOTS Multihoming               February 2022
 
 
 
-Boucadair, et al.        Expires 13 August 2022                [Page 12]
+Boucadair, et al.        Expires 6 October 2022                [Page 12]
 
-Internet-Draft              DOTS Multihoming               February 2022
+Internet-Draft              DOTS Multihoming                  April 2022
 
 
    An alternative deployment scheme is shown in Figure 9:
@@ -725,9 +725,9 @@ Internet-Draft              DOTS Multihoming               February 2022
 
 
 
-Boucadair, et al.        Expires 13 August 2022                [Page 13]
+Boucadair, et al.        Expires 6 October 2022                [Page 13]
 
-Internet-Draft              DOTS Multihoming               February 2022
+Internet-Draft              DOTS Multihoming                  April 2022
 
 
 5.4.  Multi-Homed Enterprise: Single ISP
@@ -773,17 +773,17 @@ Internet-Draft              DOTS Multihoming               February 2022
 
    Thanks to Kirill Kasavchenko for the comments.
 
-   Thanks to Kathleen Moriarty for the secdir review and Joel Jaeggli
-   for the opsdir review.
+   Thanks to Kathleen Moriarty for the secdir review, Joel Jaeggli for
+   the opsdir review, and Mirja Kuehlewind for the tsvart review.
 
    Many thanks to Roman Danyliw for the careful AD review.
 
 
 
 
-Boucadair, et al.        Expires 13 August 2022                [Page 14]
+Boucadair, et al.        Expires 6 October 2022                [Page 14]
 
-Internet-Draft              DOTS Multihoming               February 2022
+Internet-Draft              DOTS Multihoming                  April 2022
 
 
 9.  References
@@ -837,9 +837,9 @@ Internet-Draft              DOTS Multihoming               February 2022
 
 
 
-Boucadair, et al.        Expires 13 August 2022                [Page 15]
+Boucadair, et al.        Expires 6 October 2022                [Page 15]
 
-Internet-Draft              DOTS Multihoming               February 2022
+Internet-Draft              DOTS Multihoming                  April 2022
 
 
    [RFC8043]  Sarikaya, B. and M. Boucadair, "Source-Address-Dependent
@@ -883,31 +883,32 @@ Authors' Addresses
    Orange
    35000 Rennes
    France
-
    Email: mohamed.boucadair@orange.com
 
 
-   Tirumaleswar Reddy
-   McAfee, Inc.
-   Embassy Golf Link Business Park
 
 
 
-Boucadair, et al.        Expires 13 August 2022                [Page 16]
+
+
+
+
+Boucadair, et al.        Expires 6 October 2022                [Page 16]
 
-Internet-Draft              DOTS Multihoming               February 2022
+Internet-Draft              DOTS Multihoming                  April 2022
 
 
+   Tirumaleswar Reddy.K
+   Akamai
+   Embassy Golf Link Business Park
    Bangalore 560071
    Karnataka
    India
-
-   Email: TirumaleswarReddy_Konda@McAfee.com
+   Email: kondtir@gmail.com
 
 
    Wei Pan
    Huawei Technologies
-
    Email: william.panwei@huawei.com
 
 
@@ -948,5 +949,4 @@ Internet-Draft              DOTS Multihoming               February 2022
 
 
 
-
-Boucadair, et al.        Expires 13 August 2022                [Page 17]
+Boucadair, et al.        Expires 6 October 2022                [Page 17]
