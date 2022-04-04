@@ -774,7 +774,7 @@ Internet-Draft              DOTS Multihoming                  April 2022
    Thanks to Kirill Kasavchenko for the comments.
 
    Thanks to Kathleen Moriarty for the secdir review, Joel Jaeggli for
-   the opsdir review, and Mirja Kuehlewind for the tsvart review.
+   the opsdir review, and Mirja Kuhlewind for the tsvart review.
 
    Many thanks to Roman Danyliw for the careful AD review.
 
