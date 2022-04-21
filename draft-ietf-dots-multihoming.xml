@@ -10,7 +10,7 @@
 <?rfc inline="yes"?>
 <?rfc compact="yes"?>
 <?rfc subcompact="no"?>
-<rfc category="info" docName="draft-ietf-dots-multihoming-11"
+<rfc category="info" docName="draft-ietf-dots-multihoming-12"
      ipr="trust200902">
   <front>
     <title abbrev="DOTS Multihoming">Multi-homing Deployment Considerations
@@ -319,8 +319,6 @@
             IP addresses/prefixes to the enterprise network. These
             addresses/prefixes are used when communicating over the
             provisioning domain that assigned them.</t>
-
-            <!--CJ: a third sub-case could be a combination of the above two, because of organizational considerations, for example. I would explicilty mention this additional context.-->
           </list></t>
 
         <t><figure align="center" anchor="scmi"
@@ -449,12 +447,13 @@
         contact each of these DOTS servers. DOTS sessions MUST be established
         and MUST be maintained with each of the DOTS servers because the
         mitigation scope of each of these servers is restricted. The DOTS
-        client SHOULD use the certificate provided by a provisioning domain to
-        authenticate itself to the DOTS server(s) provided by the same
-        provisioning domain. How such a certificate is provided to the DOTS
-        client is out of the scope of this document. The reader may refer to
-        Section 7.1 of <xref target="RFC9132"></xref> for more details about
-        DOTS authentication methods.</t>
+        client MUST use the security credentials (a certificate, typically)
+        provided by a provisioning domain to authenticate itself to the DOTS
+        server(s) provided by the same provisioning domain. How such security
+        credentials are provided to the DOTS client is out of the scope of
+        this document. The reader may refer to Section 7.1 of <xref
+        target="RFC9132"></xref> for more details about DOTS authentication
+        methods.</t>
 
         <t>When conveying a mitigation request to protect the attack
         target(s), the DOTS client MUST select an available DOTS server whose
@@ -516,7 +515,7 @@
 .     +---+        . \          +--+
 '..................'  ----------|S2|
                                 +--+
-                         DOTS Server Domain #2
+ DOTS Client Domain     DOTS Server Domain #2   
 ]]></artwork>
           </figure>When PA addresses/prefixes are in use, the same
         considerations discussed in <xref target="dcpe"></xref> need to be
@@ -631,17 +630,20 @@
 
         <t><figure align="center" anchor="mcmgms"
             title="Multiple DOTS Clients, Multiple DOTS Gateways, Multiple DOTS Servers">
-            <artwork align="center"><![CDATA[                         +---+         
-            +------------| C1|----+                
-            |            +---+    |      
-            |                     | 
-+--+      +-+-+      +---+      +-+-+      +--+  
+            <artwork align="center"><![CDATA[       .................................
+       .                 +---+         .
+       .    +------------| C1|----+    .            
+       .    |            +---+    |    .  
+       .    |                     |    .
++--+   .  +-+-+      +---+      +-+-+  .   +--+  
 |S2|------|G2 |------| C3|------|G1 |------|S1|
-+--+      +-+-+      +---+      +-+-+      +--+ 
-          CPE2                   CPE1    
-            |            +---+    |     
-            +------------| C2|----+     
-                         +---+           
++--+   .  +-+-+      +---+      +-+-+  .   +--+ 
+       .  CPE2                   CPE1  .  
+       .    |            +---+    |    . 
+       .    +------------| C2|----+    . 
+       .                 +---+         . 
+       '...............................'
+             DOTS Client Domain
 ]]></artwork>
           </figure></t>
 

@@ -13,7 +13,7 @@ Expires: 23 October 2022                                          Akamai
 
 Multi-homing Deployment Considerations for Distributed-Denial-of-Service
                       Open Threat Signaling (DOTS)
-                     draft-ietf-dots-multihoming-11
+                     draft-ietf-dots-multihoming-12
 
 Abstract
 
@@ -90,7 +90,7 @@ Table of Contents
    7.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  14
    8.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  14
    9.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  14
-     9.1.  Normative References  . . . . . . . . . . . . . . . . . .  14
+     9.1.  Normative References  . . . . . . . . . . . . . . . . . .  15
      9.2.  Informative References  . . . . . . . . . . . . . . . . .  15
    Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  16
 
@@ -476,12 +476,13 @@ Internet-Draft              DOTS Multihoming                  April 2022
    candidate source addresses to contact each of these DOTS servers.
    DOTS sessions MUST be established and MUST be maintained with each of
    the DOTS servers because the mitigation scope of each of these
-   servers is restricted.  The DOTS client SHOULD use the certificate
-   provided by a provisioning domain to authenticate itself to the DOTS
-   server(s) provided by the same provisioning domain.  How such a
-   certificate is provided to the DOTS client is out of the scope of
-   this document.  The reader may refer to Section 7.1 of [RFC9132] for
-   more details about DOTS authentication methods.
+   servers is restricted.  The DOTS client MUST use the security
+   credentials (a certificate, typically) provided by a provisioning
+   domain to authenticate itself to the DOTS server(s) provided by the
+   same provisioning domain.  How such security credentials are provided
+   to the DOTS client is out of the scope of this document.  The reader
+   may refer to Section 7.1 of [RFC9132] for more details about DOTS
+   authentication methods.
 
    When conveying a mitigation request to protect the attack target(s),
    the DOTS client MUST select an available DOTS server whose network
@@ -496,7 +497,6 @@ Internet-Draft              DOTS Multihoming                  April 2022
    Consequently, if a CPE detects a DDoS attack that spreads over all
    its network attachments, it MUST contact all DOTS servers for
    mitigation purposes.
-
 
 
 
@@ -547,7 +547,7 @@ Internet-Draft              DOTS Multihoming                  April 2022
               .     +---+        . \          +--+
               '..................'  ----------|S2|
                                               +--+
-                                       DOTS Server Domain #2
+               DOTS Client Domain     DOTS Server Domain #2
 
        Figure 6: Multiple DOTS Clients, Single DOTS Gateway, Multiple
                                 DOTS Servers
@@ -677,17 +677,20 @@ Internet-Draft              DOTS Multihoming                  April 2022
    *  Each of these client-domain DOTS gateways communicates with the
       DOTS server of the provisioning domain.
 
-                                       +---+
-                          +------------| C1|----+
-                          |            +---+    |
-                          |                     |
-              +--+      +-+-+      +---+      +-+-+      +--+
+                     .................................
+                     .                 +---+         .
+                     .    +------------| C1|----+    .
+                     .    |            +---+    |    .
+                     .    |                     |    .
+              +--+   .  +-+-+      +---+      +-+-+  .   +--+
               |S2|------|G2 |------| C3|------|G1 |------|S1|
-              +--+      +-+-+      +---+      +-+-+      +--+
-                        CPE2                   CPE1
-                          |            +---+    |
-                          +------------| C2|----+
-                                       +---+
+              +--+   .  +-+-+      +---+      +-+-+  .   +--+
+                     .  CPE2                   CPE1  .
+                     .    |            +---+    |    .
+                     .    +------------| C2|----+    .
+                     .                 +---+         .
+                     '...............................'
+                           DOTS Client Domain
 
      Figure 9: Multiple DOTS Clients, Multiple DOTS Gateways, Multiple
                                 DOTS Servers
@@ -720,15 +723,14 @@ Internet-Draft              DOTS Multihoming                  April 2022
    ISP.  Concretely, that ISP can decide to provision the enterprise
    network with:
 
-   *  The same DOTS server for all network attachments.
-
-
 
 
 Boucadair, et al.        Expires 23 October 2022               [Page 13]
 
 Internet-Draft              DOTS Multihoming                  April 2022
 
+
+   *  The same DOTS server for all network attachments.
 
    *  Distinct DOTS servers for each network attachment.  These DOTS
       servers need to coordinate when a mitigation action is received
@@ -777,14 +779,14 @@ Internet-Draft              DOTS Multihoming                  April 2022
 
 9.  References
 
-9.1.  Normative References
-
 
 
 Boucadair, et al.        Expires 23 October 2022               [Page 14]
 
 Internet-Draft              DOTS Multihoming                  April 2022
 
+
+9.1.  Normative References
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -829,8 +831,6 @@ Internet-Draft              DOTS Multihoming                  April 2022
    [RFC7556]  Anipko, D., Ed., "Multiple Provisioning Domain
               Architecture", RFC 7556, DOI 10.17487/RFC7556, June 2015,
               <https://www.rfc-editor.org/info/rfc7556>.
-
-
 
 
 
