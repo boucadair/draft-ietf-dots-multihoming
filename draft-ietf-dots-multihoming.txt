@@ -5,10 +5,10 @@
 Network Working Group                                       M. Boucadair
 Internet-Draft                                                    Orange
 Intended status: Informational                                T. Reddy.K
-Expires: 6 October 2022                                           Akamai
+Expires: 23 October 2022                                          Akamai
                                                                   W. Pan
                                                      Huawei Technologies
-                                                            4 April 2022
+                                                           21 April 2022
 
 
 Multi-homing Deployment Considerations for Distributed-Denial-of-Service
@@ -37,7 +37,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 6 October 2022.
+   This Internet-Draft will expire on 23 October 2022.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Boucadair, et al.        Expires 6 October 2022                 [Page 1]
+Boucadair, et al.        Expires 23 October 2022                [Page 1]
 
 Internet-Draft              DOTS Multihoming                  April 2022
 
@@ -85,12 +85,12 @@ Table of Contents
            ISPs  . . . . . . . . . . . . . . . . . . . . . . . . . .  10
      5.3.  Multi-Homed Enterprise: Multiple CPEs, Multiple Upstream
            ISPs  . . . . . . . . . . . . . . . . . . . . . . . . . .  12
-     5.4.  Multi-Homed Enterprise: Single ISP  . . . . . . . . . . .  14
+     5.4.  Multi-Homed Enterprise: Single ISP  . . . . . . . . . . .  13
    6.  Security Considerations . . . . . . . . . . . . . . . . . . .  14
    7.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  14
    8.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  14
-   9.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  15
-     9.1.  Normative References  . . . . . . . . . . . . . . . . . .  15
+   9.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  14
+     9.1.  Normative References  . . . . . . . . . . . . . . . . . .  14
      9.2.  Informative References  . . . . . . . . . . . . . . . . .  15
    Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  16
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Boucadair, et al.        Expires 6 October 2022                 [Page 2]
+Boucadair, et al.        Expires 23 October 2022                [Page 2]
 
 Internet-Draft              DOTS Multihoming                  April 2022
 
@@ -152,7 +152,7 @@ Internet-Draft              DOTS Multihoming                  April 2022
        *  Sending a DOTS mitigation request to an arbitrary DOTS server
           will not necessarily help in mitigating a DDoS attack.
 
-       *  Blindly forking all DOTS mitigation requests among all
+       *  Randomly replicating all DOTS mitigation requests among all
           available DOTS servers is suboptimal.
 
        *  Sequentially contacting DOTS servers may increase the delay
@@ -165,7 +165,7 @@ Internet-Draft              DOTS Multihoming                  April 2022
 
 
 
-Boucadair, et al.        Expires 6 October 2022                 [Page 3]
+Boucadair, et al.        Expires 23 October 2022                [Page 3]
 
 Internet-Draft              DOTS Multihoming                  April 2022
 
@@ -203,13 +203,13 @@ Internet-Draft              DOTS Multihoming                  April 2022
    The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
    "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
    "OPTIONAL" in this document are to be interpreted as described in BCP
-   14 [RFC2119][RFC8174] when, and only when, they appear in all
+   14 [RFC2119] [RFC8174] when, and only when, they appear in all
    capitals, as shown here.
 
 3.  Terminology
 
-   This document makes use of the terms defined in [RFC8811] and
-   [RFC4116].  In particular:
+   This document makes use of the terms defined in [RFC8811], [RFC8612],
+   and [RFC4116].  In particular:
 
    Provider-Aggregatable (PA) addresses:  are globally-unique addresses
       assigned by a transit provider to a customer.  The addresses are
@@ -221,7 +221,7 @@ Internet-Draft              DOTS Multihoming                  April 2022
 
 
 
-Boucadair, et al.        Expires 6 October 2022                 [Page 4]
+Boucadair, et al.        Expires 23 October 2022                [Page 4]
 
 Internet-Draft              DOTS Multihoming                  April 2022
 
@@ -277,7 +277,7 @@ Internet-Draft              DOTS Multihoming                  April 2022
 
 
 
-Boucadair, et al.        Expires 6 October 2022                 [Page 5]
+Boucadair, et al.        Expires 23 October 2022                [Page 5]
 
 Internet-Draft              DOTS Multihoming                  April 2022
 
@@ -333,13 +333,15 @@ Internet-Draft              DOTS Multihoming                  April 2022
 
 
 
-Boucadair, et al.        Expires 6 October 2022                 [Page 6]
+Boucadair, et al.        Expires 23 October 2022                [Page 6]
 
 Internet-Draft              DOTS Multihoming                  April 2022
 
 
    2.  PA addresses/prefixes: Each of the provisioning domains assigns
-       IP addresses/prefixes to the enterprise network.
+       IP addresses/prefixes to the enterprise network.  These
+       addresses/prefixes are used when communicating over the
+       provisioning domain that assigned them.
 
                   +------+              +------+
                   | ISP1 |              | ISP2 |
@@ -359,7 +361,7 @@ Internet-Draft              DOTS Multihoming                  April 2022
 4.3.  Multi-homed Enterprise: Multiple CPEs, Multiple Upstream ISPs
 
    This scenario is similar to the one described in Section 4.2; the
-   main difference is that dedicated routers (rtr1 and rtr2) are used to
+   main difference is that dedicated routers (CPE1 and CPE2) are used to
    connect to each provisioning domain.
 
                             +------+    +------+
@@ -369,7 +371,7 @@ Internet-Draft              DOTS Multihoming                  April 2022
           ......................|..........|.......................
                                 |          |     Enterprise Network
                             +---+--+    +--+---+
-                            | rtr1 |    | rtr2 |
+                            | CPE1 |    | CPE2 |
                             +------+    +------+
 
                                   ... (Internal Network)
@@ -379,17 +381,15 @@ Internet-Draft              DOTS Multihoming                  April 2022
 
 4.4.  Multi-homed Enterprise with the Same ISP
 
-   This scenario is a variant of Section 4.2 and Section 4.3 in which
-   multi-homing is supported by the same ISP (i.e., same provisioning
-   domain).
+   This scenario is a variant of Sections 4.2 and 4.3 in which multi-
+   homing is supported by the same ISP (i.e., same provisioning domain).
 
 
 
 
 
 
-
-Boucadair, et al.        Expires 6 October 2022                 [Page 7]
+Boucadair, et al.        Expires 23 October 2022                [Page 7]
 
 Internet-Draft              DOTS Multihoming                  April 2022
 
@@ -409,11 +409,11 @@ Internet-Draft              DOTS Multihoming                  April 2022
     |   Single CPE, Multiple  | Internal hosts or CPE |      CPE      |
     |   provisioning domains  |                       |               |
     +-------------------------+-----------------------+---------------+
-    | Multiple CPEs, Multiple | Internal hosts or all |   CPEs (rtr1  |
-    |   provisioning domains  |  CPEs (rtr1 and rtr2) |   and rtr2)   |
+    | Multiple CPEs, Multiple | Internal hosts or all |   CPEs (CPE1  |
+    |   provisioning domains  |  CPEs (CPE1 and CPE2) |   and CPE2)   |
     +-------------------------+-----------------------+---------------+
-    | Multi-homed enterprise, | Internal hosts or all |   CPEs (rtr1  |
-    |   Single provisioning   |  CPEs (rtr1 and rtr2) |   and rtr2)   |
+    | Multi-homed enterprise, | Internal hosts or all |   CPEs (CPE1  |
+    |   Single provisioning   |  CPEs (CPE1 and CPE2) |   and CPE2)   |
     |          domain         |                       |               |
     +-------------------------+-----------------------+---------------+
 
@@ -445,63 +445,7 @@ Internet-Draft              DOTS Multihoming                  April 2022
 
 
 
-Boucadair, et al.        Expires 6 October 2022                 [Page 8]
-
-Internet-Draft              DOTS Multihoming                  April 2022
-
-
-   The DOTS client MUST resolve the DOTS server's name provided by each
-   provisioning domain using either the DNS servers learned from the
-   respective provisioning domain or from the DNS servers associated
-   with the interface(s) for which a DOTS server was explicitly
-   configured (Section 4).  IPv6-capable DOTS clients MUST use the
-   source address selection algorithm defined in [RFC6724] to select the
-   candidate source addresses to contact each of these DOTS servers.
-   DOTS sessions MUST be established and MUST be maintained with each of
-   the DOTS servers because the mitigation scope of each of these
-   servers is restricted.  The DOTS client SHOULD use the certificate
-   provided by a provisioning domain to authenticate itself to the DOTS
-   server(s) provided by the same provisioning domain.  How such a
-   certificate is provided to the DOTS client is out of the scope of
-   this document.
-
-   When conveying a mitigation request to protect the attack target(s),
-   the DOTS client MUST select an available DOTS server whose network
-   has assigned the IP prefixes from which target prefixes/addresses are
-   derived.  This implies that if no appropriate DOTS server is found,
-   the DOTS client MUST NOT send the mitigation request to any other
-   available DOTS server.
-
-   For example, a mitigation request to protect target resources bound
-   to a PA IP address/prefix cannot be satisfied by a provisioning
-   domain other than the one that owns those addresses/prefixes.
-   Consequently, if a CPE detects a DDoS attack that spreads over all
-   its network attachments, it MUST contact all DOTS servers for
-   mitigation purposes.
-
-   The DOTS client MUST be able to associate a DOTS server with each
-   provisioning domain it serves.  For example, if the DOTS client is
-   provisioned with S1 using DHCP when attaching to a first network and
-   with S2 using Protocol Configuration Option (PCO) [TS.24008] when
-   attaching to a second network, the DOTS client must record the
-   interface from which a DOTS server was provisioned.  DOTS signaling
-   session to a given DOTS server must be established using the
-   interface from which the DOTS server was provisioned.  If a DOTS
-   server is explicitly configured, DOTS signaling with that server must
-   be established via the interfaces that are indicated in the explicit
-   configuration or via any active interface if no interface is
-   configured.
-
-
-
-
-
-
-
-
-
-
-Boucadair, et al.        Expires 6 October 2022                 [Page 9]
+Boucadair, et al.        Expires 23 October 2022                [Page 8]
 
 Internet-Draft              DOTS Multihoming                  April 2022
 
@@ -523,6 +467,58 @@ Internet-Draft              DOTS Multihoming                  April 2022
 
         Figure 5: DOTS Associations for a Multihomed Residential CPE
 
+   The DOTS client MUST resolve the DOTS server's name provided by each
+   provisioning domain using either the DNS servers learned from the
+   respective provisioning domain or from the DNS servers associated
+   with the interface(s) for which a DOTS server was explicitly
+   configured (Section 4).  IPv6-capable DOTS clients MUST use the
+   source address selection algorithm defined in [RFC6724] to select the
+   candidate source addresses to contact each of these DOTS servers.
+   DOTS sessions MUST be established and MUST be maintained with each of
+   the DOTS servers because the mitigation scope of each of these
+   servers is restricted.  The DOTS client SHOULD use the certificate
+   provided by a provisioning domain to authenticate itself to the DOTS
+   server(s) provided by the same provisioning domain.  How such a
+   certificate is provided to the DOTS client is out of the scope of
+   this document.  The reader may refer to Section 7.1 of [RFC9132] for
+   more details about DOTS authentication methods.
+
+   When conveying a mitigation request to protect the attack target(s),
+   the DOTS client MUST select an available DOTS server whose network
+   has assigned the IP prefixes from which target prefixes/addresses are
+   derived.  This implies that if no appropriate DOTS server is found,
+   the DOTS client MUST NOT send the mitigation request to any other
+   available DOTS server.
+
+   For example, a mitigation request to protect target resources bound
+   to a PA IP address/prefix cannot be satisfied by a provisioning
+   domain other than the one that owns those addresses/prefixes.
+   Consequently, if a CPE detects a DDoS attack that spreads over all
+   its network attachments, it MUST contact all DOTS servers for
+   mitigation purposes.
+
+
+
+
+
+Boucadair, et al.        Expires 23 October 2022                [Page 9]
+
+Internet-Draft              DOTS Multihoming                  April 2022
+
+
+   The DOTS client MUST be able to associate a DOTS server with each
+   provisioning domain it serves.  For example, if the DOTS client is
+   provisioned with S1 using DHCP when attaching to a first network and
+   with S2 using Protocol Configuration Option (PCO) [TS.24008] when
+   attaching to a second network, the DOTS client must record the
+   interface from which a DOTS server was provisioned.  DOTS signaling
+   session to a given DOTS server must be established using the
+   interface from which the DOTS server was provisioned.  If a DOTS
+   server is explicitly configured, DOTS signaling with that server must
+   be established via the interfaces that are indicated in the explicit
+   configuration or via any active interface if no interface is
+   configured.
+
 5.2.  Multi-Homed Enterprise: Single CPE, Multiple Upstream ISPs
 
    Figure 6 illustrates the DOTS sessions that can be established with a
@@ -536,34 +532,35 @@ Internet-Draft              DOTS Multihoming                  April 2022
    *  A client-domain DOTS gateway is enabled to aggregate and then
       relay the requests towards upstream DOTS servers.
 
-                                              +--+
-                                    ----------|S1|
-                  +---+           /           +--+
-                  | C1|----+     /     DOTS Server Domain #1
-                  +---+    |    /
-                           |   /
-              +---+      +-+-+/
-              | C3|------| G |
-              +---+      +-+-+\
-                          CPE  \
-                  +---+    |    \
-                  | C2|----+     \
-                  +---+           \           +--+
-                                    ----------|S2|
+                                               +--+
+              ....................   ----------|S1|
+              .    +---+         . /           +--+
+              .    | C1|----+    ./     DOTS Server Domain #1
+              .    +---+    |    .
+              .             |   /.
+              .+---+      +-+-+/ .
+              .| C3|------| G |  .
+              .+---+      +-+-+\ .
+              .            CPE  \.
+              .     +---+    |   .
+              .     | C2|----+   .\
+              .     +---+        . \          +--+
+              '..................'  ----------|S2|
                                               +--+
                                        DOTS Server Domain #2
 
+       Figure 6: Multiple DOTS Clients, Single DOTS Gateway, Multiple
+                                DOTS Servers
 
 
 
 
-Boucadair, et al.        Expires 6 October 2022                [Page 10]
+
+
+Boucadair, et al.        Expires 23 October 2022               [Page 10]
 
 Internet-Draft              DOTS Multihoming                  April 2022
 
-
-       Figure 6: Multiple DOTS Clients, Single DOTS Gateway, Multiple
-                                DOTS Servers
 
    When PA addresses/prefixes are in use, the same considerations
    discussed in Section 5.1 need to be followed by the client-domain
@@ -598,25 +595,11 @@ Internet-Draft              DOTS Multihoming                  April 2022
                           |     .  +--+  .     |
                           +--------|C2|--------+
                                 .  +--+  .
-                                ..........
+                                '........'
                                DOTS Client
                                  Domain
 
            Figure 7: Multiple DOTS Clients, Multiple DOTS Servers
-
-
-
-
-
-
-
-
-
-
-Boucadair, et al.        Expires 6 October 2022                [Page 11]
-
-Internet-Draft              DOTS Multihoming                  April 2022
-
 
    If PI addresses/prefixes are in use, the DOTS client MUST send a
    mitigation request to all the DOTS servers.  The use of anycast
@@ -625,6 +608,15 @@ Internet-Draft              DOTS Multihoming                  April 2022
    may not be able to select the appropriate provisioning domain to
    which the mitigation request should be forwarded.  As a consequence,
    the request may not be forwarded to the appropriate DOTS server.
+
+
+
+
+
+Boucadair, et al.        Expires 23 October 2022               [Page 11]
+
+Internet-Draft              DOTS Multihoming                  April 2022
+
 
    If PA addresses/prefixes are used, the same considerations discussed
    in Section 5.1 need to be followed by the DOTS clients.  Because DOTS
@@ -645,19 +637,19 @@ Internet-Draft              DOTS Multihoming                  April 2022
                          +--+   .  +--+  .   +--+
                          |S2|   .  |C2|------|S1|
                          +--+   .  +--+  .   +--+
-                                ..........
+                                '........'
                                DOTS Client
                                  Domain
 
                     Figure 8: Single Homed DOTS Clients
 
    For both deployments depicted in Figures 7 and 8, each DOTS client
-   SHOULD be provided with policies (e.g., a prefix filter that will be
-   against DDoS detection alarms) that will trigger DOTS communications
-   with the DOTS servers.  Such policies will help the DOTS client to
-   select the appropriate destination DOTS server.  The CPE MUST select
-   the appropriate source IP address when forwarding DOTS messages
-   received from an internal DOTS client.
+   SHOULD be provided with policies (e.g., a prefix filter that is used
+   to filter DDoS detection alarms) that will trigger DOTS
+   communications with the DOTS servers.  Such policies will help the
+   DOTS client to select the appropriate destination DOTS server.  The
+   CPE MUST select the appropriate source IP address when forwarding
+   DOTS messages received from an internal DOTS client.
 
 5.3.  Multi-Homed Enterprise: Multiple CPEs, Multiple Upstream ISPs
 
@@ -666,20 +658,21 @@ Internet-Draft              DOTS Multihoming                  April 2022
    scenario is to select the appropriate exit router when contacting a
    given DOTS server.
 
-
-
-
-Boucadair, et al.        Expires 6 October 2022                [Page 12]
-
-Internet-Draft              DOTS Multihoming                  April 2022
-
-
    An alternative deployment scheme is shown in Figure 9:
 
    *  DOTS clients are enabled in hosts located in the internal network.
 
-   *  A client-domain DOTS gateway is enabled in each CPE (rtr1 and rtr2
+   *  A client-domain DOTS gateway is enabled in each CPE (CPE1 and CPE2
       per Table 1).
+
+
+
+
+
+Boucadair, et al.        Expires 23 October 2022               [Page 12]
+
+Internet-Draft              DOTS Multihoming                  April 2022
+
 
    *  Each of these client-domain DOTS gateways communicates with the
       DOTS server of the provisioning domain.
@@ -691,7 +684,7 @@ Internet-Draft              DOTS Multihoming                  April 2022
               +--+      +-+-+      +---+      +-+-+      +--+
               |S2|------|G2 |------| C3|------|G1 |------|S1|
               +--+      +-+-+      +---+      +-+-+      +--+
-                        rtr2                   rtr1
+                        CPE2                   CPE1
                           |            +---+    |
                           +------------| C2|----+
                                        +---+
@@ -720,16 +713,6 @@ Internet-Draft              DOTS Multihoming                  April 2022
    DOTS gateway to reach.  The use of anycast addresses is NOT
    RECOMMENDED to reach client-domain DOTS gateways.
 
-
-
-
-
-
-Boucadair, et al.        Expires 6 October 2022                [Page 13]
-
-Internet-Draft              DOTS Multihoming                  April 2022
-
-
 5.4.  Multi-Homed Enterprise: Single ISP
 
    The key difference of the scenario described in Section 4.4 compared
@@ -738,6 +721,14 @@ Internet-Draft              DOTS Multihoming                  April 2022
    network with:
 
    *  The same DOTS server for all network attachments.
+
+
+
+
+Boucadair, et al.        Expires 23 October 2022               [Page 13]
+
+Internet-Draft              DOTS Multihoming                  April 2022
+
 
    *  Distinct DOTS servers for each network attachment.  These DOTS
       servers need to coordinate when a mitigation action is received
@@ -748,6 +739,9 @@ Internet-Draft              DOTS Multihoming                  April 2022
    mitigation requests.
 
 6.  Security Considerations
+
+   A set of security threats related to multihoming are discussed in
+   [RFC4218].
 
    DOTS-related security considerations are discussed in Section 4 of
    [RFC8811].
@@ -778,17 +772,19 @@ Internet-Draft              DOTS Multihoming                  April 2022
 
    Many thanks to Roman Danyliw for the careful AD review.
 
-
-
-
-Boucadair, et al.        Expires 6 October 2022                [Page 14]
-
-Internet-Draft              DOTS Multihoming                  April 2022
-
+   Thanks to Lars Eggert, Robert Wilton, Paul Wouters, Erik Kline, and
+   Eric Vyncke for the IESG review.
 
 9.  References
 
 9.1.  Normative References
+
+
+
+Boucadair, et al.        Expires 23 October 2022               [Page 14]
+
+Internet-Draft              DOTS Multihoming                  April 2022
+
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -821,6 +817,10 @@ Internet-Draft              DOTS Multihoming                  April 2022
               RFC 4116, DOI 10.17487/RFC4116, July 2005,
               <https://www.rfc-editor.org/info/rfc4116>.
 
+   [RFC4218]  Nordmark, E. and T. Li, "Threats Relating to IPv6
+              Multihoming Solutions", RFC 4218, DOI 10.17487/RFC4218,
+              October 2005, <https://www.rfc-editor.org/info/rfc4218>.
+
    [RFC4732]  Handley, M., Ed., Rescorla, E., Ed., and IAB, "Internet
               Denial-of-Service Considerations", RFC 4732,
               DOI 10.17487/RFC4732, December 2006,
@@ -837,7 +837,7 @@ Internet-Draft              DOTS Multihoming                  April 2022
 
 
 
-Boucadair, et al.        Expires 6 October 2022                [Page 15]
+Boucadair, et al.        Expires 23 October 2022               [Page 15]
 
 Internet-Draft              DOTS Multihoming                  April 2022
 
@@ -847,6 +847,11 @@ Internet-Draft              DOTS Multihoming                  April 2022
               Overview of the Problem Space", RFC 8043,
               DOI 10.17487/RFC8043, January 2017,
               <https://www.rfc-editor.org/info/rfc8043>.
+
+   [RFC8612]  Mortensen, A., Reddy, T., and R. Moskowitz, "DDoS Open
+              Threat Signaling (DOTS) Requirements", RFC 8612,
+              DOI 10.17487/RFC8612, May 2019,
+              <https://www.rfc-editor.org/info/rfc8612>.
 
    [RFC8783]  Boucadair, M., Ed. and T. Reddy.K, Ed., "Distributed
               Denial-of-Service Open Threat Signaling (DOTS) Data
@@ -888,12 +893,7 @@ Authors' Addresses
 
 
 
-
-
-
-
-
-Boucadair, et al.        Expires 6 October 2022                [Page 16]
+Boucadair, et al.        Expires 23 October 2022               [Page 16]
 
 Internet-Draft              DOTS Multihoming                  April 2022
 
@@ -949,4 +949,4 @@ Internet-Draft              DOTS Multihoming                  April 2022
 
 
 
-Boucadair, et al.        Expires 6 October 2022                [Page 17]
+Boucadair, et al.        Expires 23 October 2022               [Page 17]

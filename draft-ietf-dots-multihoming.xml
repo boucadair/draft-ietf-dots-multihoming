@@ -146,7 +146,7 @@
               <t>Sending a DOTS mitigation request to an arbitrary DOTS server
               will not necessarily help in mitigating a DDoS attack.</t>
 
-              <t>Blindly forking all DOTS mitigation requests among all
+              <t>Randomly replicating all DOTS mitigation requests among all
               available DOTS servers is suboptimal.</t>
 
               <t>Sequentially contacting DOTS servers may increase the delay
@@ -194,14 +194,14 @@
       <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
       "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
       "OPTIONAL" in this document are to be interpreted as described in BCP 14
-      <xref target="RFC2119"></xref><xref target="RFC8174"></xref> when, and
+      <xref target="RFC2119"></xref> <xref target="RFC8174"></xref> when, and
       only when, they appear in all capitals, as shown here.</t>
     </section>
 
     <section title="Terminology">
       <t>This document makes use of the terms defined in <xref
-      target="RFC8811"></xref> and <xref target="RFC4116"></xref>. In
-      particular:</t>
+      target="RFC8811"></xref>, <xref target="RFC8612"></xref>, and <xref
+      target="RFC4116"></xref>. In particular:</t>
 
       <t><list style="hanging">
           <t hangText="Provider-Aggregatable (PA) addresses:">are
@@ -316,7 +316,9 @@
             domains.</t>
 
             <t>PA addresses/prefixes: Each of the provisioning domains assigns
-            IP addresses/prefixes to the enterprise network.</t>
+            IP addresses/prefixes to the enterprise network. These
+            addresses/prefixes are used when communicating over the
+            provisioning domain that assigned them.</t>
 
             <!--CJ: a third sub-case could be a combination of the above two, because of organizational considerations, for example. I would explicilty mention this additional context.-->
           </list></t>
@@ -343,7 +345,7 @@
                title="Multi-homed Enterprise: Multiple CPEs, Multiple Upstream ISPs">
         <t>This scenario is similar to the one described in <xref
         target="sc2"></xref>; the main difference is that dedicated routers
-        (rtr1 and rtr2) are used to connect to each provisioning domain.</t>
+        (CPE1 and CPE2) are used to connect to each provisioning domain.</t>
 
         <t><figure anchor="mcmi"
             title="Multi-homed Enterprise Network (Multiple CPEs, Multiple ISPs)">
@@ -354,7 +356,7 @@
        ......................|..........|.......................
                              |          |     Enterprise Network
                          +---+--+    +--+---+
-                         | rtr1 |    | rtr2 |
+                         | CPE1 |    | CPE2 |
                          +------+    +------+
  
                                ... (Internal Network)
@@ -364,9 +366,10 @@
       </section>
 
       <section anchor="sc4" title="Multi-homed Enterprise with the Same ISP">
-        <t>This scenario is a variant of <xref target="sc2"></xref> and <xref
-        target="sc3"></xref> in which multi-homing is supported by the same
-        ISP (i.e., same provisioning domain).</t>
+        <t>This scenario is a variant of Sections <xref format="counter"
+        target="sc2"></xref> and <xref format="counter" target="sc3"></xref>
+        in which multi-homing is supported by the same ISP (i.e., same
+        provisioning domain).</t>
       </section>
     </section>
 
@@ -396,15 +399,15 @@
 
         <c>Multiple CPEs, Multiple provisioning domains</c>
 
-        <c>Internal hosts or all CPEs (rtr1 and rtr2)</c>
+        <c>Internal hosts or all CPEs (CPE1 and CPE2)</c>
 
-        <c>CPEs (rtr1 and rtr2)</c>
+        <c>CPEs (CPE1 and CPE2)</c>
 
         <c>Multi-homed enterprise, Single provisioning domain</c>
 
-        <c>Internal hosts or all CPEs (rtr1 and rtr2)</c>
+        <c>Internal hosts or all CPEs (CPE1 and CPE2)</c>
 
-        <c>CPEs (rtr1 and rtr2)</c>
+        <c>CPEs (CPE1 and CPE2)</c>
       </texttable>
 
       <t>These deployment schemes are further discussed in the following
@@ -416,6 +419,25 @@
         within the context of the scenario described in <xref
         target="sc1"></xref>. As listed in <xref target="dep"></xref>, the
         DOTS client is hosted by the residential CPE.</t>
+
+        <t><figure align="center" anchor="dotsrcpe"
+            title="DOTS Associations for a Multihomed Residential CPE">
+            <artwork align="center"><![CDATA[                          +--+
+                ----------|S1|
+              /           +--+
+             /    DOTS Server Domain #1  
+            /
+      +---+/  
+      | C |
+      +---+\  
+       CPE  \ 
+             \
+              \           +--+
+                ----------|S2|
+                          +--+
+                  DOTS Server Domain #2
+]]></artwork>
+          </figure></t>
 
         <t>The DOTS client MUST resolve the DOTS server's name provided by
         each provisioning domain using either the DNS servers learned from the
@@ -430,7 +452,9 @@
         client SHOULD use the certificate provided by a provisioning domain to
         authenticate itself to the DOTS server(s) provided by the same
         provisioning domain. How such a certificate is provided to the DOTS
-        client is out of the scope of this document.</t>
+        client is out of the scope of this document. The reader may refer to
+        Section 7.1 of <xref target="RFC9132"></xref> for more details about
+        DOTS authentication methods.</t>
 
         <t>When conveying a mitigation request to protect the attack
         target(s), the DOTS client MUST select an available DOTS server whose
@@ -458,27 +482,6 @@
         with that server must be established via the interfaces that are
         indicated in the explicit configuration or via any active interface if
         no interface is configured.</t>
-
-        <t></t>
-
-        <t><figure align="center" anchor="dotsrcpe"
-            title="DOTS Associations for a Multihomed Residential CPE">
-            <artwork align="center"><![CDATA[                          +--+
-                ----------|S1|
-              /           +--+
-             /    DOTS Server Domain #1  
-            /
-      +---+/  
-      | C |
-      +---+\  
-       CPE  \ 
-             \
-              \           +--+
-                ----------|S2|
-                          +--+
-                  DOTS Server Domain #2
-]]></artwork>
-          </figure></t>
       </section>
 
       <section title="Multi-Homed Enterprise: Single CPE, Multiple Upstream ISPs">
@@ -498,20 +501,20 @@
 
         <t><figure align="center" anchor="dotsmcgms"
             title="Multiple DOTS Clients, Single DOTS Gateway, Multiple DOTS Servers">
-            <artwork align="center"><![CDATA[                                +--+
-                      ----------|S1|
-    +---+           /           +--+
-    | C1|----+     /     DOTS Server Domain #1         
-    +---+    |    /
-             |   /
-+---+      +-+-+/  
-| C3|------| G |
-+---+      +-+-+\  
-            CPE  \ 
-    +---+    |    \ 
-    | C2|----+     \
-    +---+           \           +--+
-                      ----------|S2|
+            <artwork align="center"><![CDATA[                                 +--+
+....................   ----------|S1|
+.    +---+         . /           +--+
+.    | C1|----+    ./     DOTS Server Domain #1         
+.    +---+    |    .
+.             |   /.
+.+---+      +-+-+/ .  
+.| C3|------| G |  .
+.+---+      +-+-+\ . 
+.            CPE  \.
+.     +---+    |   . 
+.     | C2|----+   .\
+.     +---+        . \          +--+
+'..................'  ----------|S2|
                                 +--+
                          DOTS Server Domain #2
 ]]></artwork>
@@ -554,7 +557,7 @@
  |     .  +--+  .     |     
  +--------|C2|--------+     
        .  +--+  .
-       ..........    
+       '........'    
       DOTS Client 
         Domain          
 ]]></artwork>
@@ -590,7 +593,7 @@
 +--+   .  +--+  .   +--+
 |S2|   .  |C2|------|S1|
 +--+   .  +--+  .   +--+
-       ..........
+       '........'
       DOTS Client 
         Domain  
 ]]></artwork>
@@ -599,7 +602,7 @@
         <t>For both deployments depicted in Figures <xref format="counter"
         target="mcms"></xref> and <xref format="counter"
         target="scms"></xref>, each DOTS client SHOULD be provided with
-        policies (e.g., a prefix filter that will be against DDoS detection
+        policies (e.g., a prefix filter that is used to filter DDoS detection
         alarms) that will trigger DOTS communications with the DOTS servers.
         Such policies will help the DOTS client to select the appropriate
         destination DOTS server. The CPE MUST select the appropriate source IP
@@ -619,8 +622,8 @@
             <t>DOTS clients are enabled in hosts located in the internal
             network.</t>
 
-            <t>A client-domain DOTS gateway is enabled in each CPE (rtr1 and
-            rtr2 per <xref target="dep"></xref>).</t>
+            <t>A client-domain DOTS gateway is enabled in each CPE (CPE1 and
+            CPE2 per <xref target="dep"></xref>).</t>
 
             <t>Each of these client-domain DOTS gateways communicates with the
             DOTS server of the provisioning domain.</t>
@@ -635,7 +638,7 @@
 +--+      +-+-+      +---+      +-+-+      +--+  
 |S2|------|G2 |------| C3|------|G1 |------|S1|
 +--+      +-+-+      +---+      +-+-+      +--+ 
-          rtr2                   rtr1    
+          CPE2                   CPE1    
             |            +---+    |     
             +------------| C2|----+     
                          +---+           
@@ -685,6 +688,9 @@
     </section>
 
     <section anchor="Security" title="Security Considerations">
+      <t>A set of security threats related to multihoming are discussed in
+      <xref target="RFC4218"></xref>.</t>
+
       <t>DOTS-related security considerations are discussed in Section 4 of
       <xref target="RFC8811"></xref>.</t>
 
@@ -713,6 +719,9 @@
       the opsdir review, and Mirja Kuhlewind for the tsvart review.</t>
 
       <t>Many thanks to Roman Danyliw for the careful AD review.</t>
+
+      <t>Thanks to Lars Eggert, Robert Wilton, Paul Wouters, Erik Kline, and
+      &Eacute;ric Vyncke for the IESG review.</t>
     </section>
   </middle>
 
@@ -747,6 +756,10 @@
       <?rfc include='reference.RFC.8903'?>
 
       <?rfc include='reference.RFC.8803'?>
+
+      <?rfc include='reference.RFC.8612'?>
+
+      <?rfc include='reference.RFC.4218'?>
 
       <reference anchor="TS.24008"
                  target="http://www.3gpp.org/DynaReport/24008.htm">
