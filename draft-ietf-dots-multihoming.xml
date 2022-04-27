@@ -204,19 +204,18 @@
       target="RFC4116"></xref>. In particular:</t>
 
       <t><list style="hanging">
-          <t hangText="Provider-Aggregatable (PA) addresses:">are
-          globally-unique addresses assigned by a transit provider to a
-          customer. The addresses are considered "aggregatable" because the
-          set of routes corresponding to the PA addresses are usually covered
-          by an aggregate route set corresponding to the address space
-          operated by the transit provider, from which the assignment was made
-          (Section 2 of <xref target="RFC4116"></xref>).</t>
+          <t hangText="Provider-Aggregatable (PA) addresses:">globally-unique
+          addresses assigned by a transit provider to a customer. The
+          addresses are considered "aggregatable" because the set of routes
+          corresponding to the PA addresses are usually covered by an
+          aggregate route set corresponding to the address space operated by
+          the transit provider, from which the assignment was made (Section 2
+          of <xref target="RFC4116"></xref>).</t>
 
-          <t hangText="Provider-Independent (PI) addresses:">are
-          globally-unique addresses which are not assigned by a transit
-          provider, but are provided by some other organisation, usually a
-          Regional Internet Registry (RIR) (Section 2 of <xref
-          target="RFC4116"></xref>).</t>
+          <t hangText="Provider-Independent (PI) addresses:">globally-unique
+          addresses that are not assigned by a transit provider, but are
+          provided by some other organisation, usually a Regional Internet
+          Registry (RIR) (Section 2 of <xref target="RFC4116"></xref>).</t>
         </list></t>
 
       <t>IP indifferently refers to IPv4 or IPv6.</t>
@@ -303,7 +302,7 @@
             single router.</t>
 
             <t>That router is connected to multiple provisioning domains
-            (i.e., managed by distinct administrative entities).</t>
+            managed by distinct administrative entities.</t>
           </list></t>
 
         <t>Unlike the previous scenario, two sub-cases can be considered for
@@ -475,7 +474,7 @@
         with S2 using Protocol Configuration Option (PCO) <xref
         target="TS.24008"></xref> when attaching to a second network, the DOTS
         client must record the interface from which a DOTS server was
-        provisioned. DOTS signaling session to a given DOTS server must be
+        provisioned. A DOTS signaling session to a given DOTS server must be
         established using the interface from which the DOTS server was
         provisioned. If a DOTS server is explicitly configured, DOTS signaling
         with that server must be established via the interfaces that are
@@ -491,7 +490,7 @@
         This deployment is characterized as follows:</t>
 
         <t><list style="symbols">
-            <t>One of more DOTS clients are enabled in hosts located in the
+            <t>One or more DOTS clients are enabled in hosts located in the
             internal network.</t>
 
             <t>A client-domain DOTS gateway is enabled to aggregate and then
@@ -521,13 +520,13 @@
         considerations discussed in <xref target="dcpe"></xref> need to be
         followed by the client-domain DOTS gateway to contact its DOTS
         server(s). The client-domain DOTS gateways can be reachable from DOTS
-        clients by using an unicast address or an anycast address (Section
+        clients by using a unicast address or an anycast address (Section
         3.2.4 of <xref target="RFC8811"></xref>).</t>
 
         <t>Nevertheless, when PI addresses/prefixes are assigned and absent
-        any policy, the client-domain DOTS gateway MUST send mitigation
+        any policy, the client-domain DOTS gateway SHOULD send mitigation
         requests to all its DOTS servers. Otherwise, the attack traffic may
-        still be delivered via the ISP which hasn&rsquo;t received the
+        still be delivered via the ISP that hasn&rsquo;t received the
         mitigation request.</t>
 
         <t>An alternate deployment model is depicted in <xref
@@ -563,8 +562,8 @@
           </figure></t>
 
         <t>If PI addresses/prefixes are in use, the DOTS client MUST send a
-        mitigation request to all the DOTS servers. The use of anycast
-        addresses to reach these DOTS servers is NOT RECOMMENDED. If a
+        mitigation request to all the DOTS servers. The use of the same
+        anycast addresses to reach these DOTS servers is NOT RECOMMENDED. If a
         well-known anycast address is used to reach multiple DOTS servers, the
         CPE may not be able to select the appropriate provisioning domain to
         which the mitigation request should be forwarded. As a consequence,
@@ -643,17 +642,17 @@
        .    +------------| C2|----+    . 
        .                 +---+         . 
        '...............................'
-             DOTS Client Domain
+              DOTS Client Domain
 ]]></artwork>
           </figure></t>
 
         <t>When PI addresses/prefixes are used, DOTS clients MUST contact all
         the client-domain DOTS gateways to send a DOTS message. Client-domain
         DOTS gateways will then relay the request to the DOTS servers as a
-        function of local policy. Note that anycast addresses cannot be used
-        to establish DOTS sessions between DOTS clients and client-domain DOTS
-        gateways because only one DOTS gateway will receive the mitigation
-        request.</t>
+        function of local policy. Note that (same) anycast addresses cannot be
+        used to establish DOTS sessions between DOTS clients and client-domain
+        DOTS gateways because only one DOTS gateway will receive the
+        mitigation request. </t>
 
         <t>When PA addresses/prefixes are used, but no filter rules are
         provided to DOTS clients, the latter MUST contact all client-domain
@@ -665,8 +664,8 @@
         <t>When PA addresses/prefixes are used, but specific filter rules are
         provided to DOTS clients using some means that are out of scope of
         this document, the clients MUST select the appropriate client-domain
-        DOTS gateway to reach. The use of anycast addresses is NOT RECOMMENDED
-        to reach client-domain DOTS gateways.</t>
+        DOTS gateway to reach. The use of the same anycast addresses is NOT
+        RECOMMENDED to reach client-domain DOTS gateways.</t>
       </section>
 
       <section title="Multi-Homed Enterprise: Single ISP">
@@ -718,7 +717,8 @@
       <t>Thanks to Kirill Kasavchenko for the comments.</t>
 
       <t>Thanks to Kathleen Moriarty for the secdir review, Joel Jaeggli for
-      the opsdir review, and Mirja Kuhlewind for the tsvart review.</t>
+      the opsdir review, Mirja Kuhlewind for the tsvart review, and Dave
+      Thaler for the Intdir review.</t>
 
       <t>Many thanks to Roman Danyliw for the careful AD review.</t>
 
